@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
             throw new ErrorHandler(errorCodes.FORBIDDEN, NO_TOKEN.customCode, 'Token not valid!');
         }
 
-        //        const isExistToken = await authService.getTokenByParams({ access_token: token }, 'user_id');
+        //        const isExistToken = await authService.getTokenByParams({ refresh_token: token }, 'user_id');
 
         // TODO find User
 
