@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
-const dotenv = require('dotenv').config();
+const dotenv = require('dotenv').config({ path: path.resolve('../', '.env.example') });
 const morgan = require('morgan');
 const cors = require('cors');
 
