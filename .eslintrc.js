@@ -15,6 +15,10 @@ module.exports = {
     ],
     plugins: [],
     rules: {
+        'import/no-unresolved': [
+            2,
+            { caseSensitive: false }
+        ],
         'array-bracket-newline': [
             'error',
             { minItems: 2 },
