@@ -11,6 +11,10 @@ module.exports = {
         customCode: 2001,
         message: 'LOGIN'
     },
+    LOGOUT: {
+        customCode: 2003,
+        message: 'LOGOUT'
+    },
     REMOVE: {
         customCode: 2002,
         message: 'REMOVED'

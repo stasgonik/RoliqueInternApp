@@ -1,3 +1,3 @@
 module.exports = {
-    OAUTH: require('./O_Auth')
+    OAuth: require('./O_Auth')
 };
