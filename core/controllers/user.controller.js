@@ -9,5 +9,12 @@ module.exports = {
         } catch (e) {
             next(e);
         }
-    }
+    },
+    createUser: (req, res, next) => {
+        try {
+            res.send('OK');
+        } catch (e) {
+            next(e);
+        }
+    },
 };

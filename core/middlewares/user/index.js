@@ -1,3 +1,4 @@
 module.exports = {
-    checkIsRole: require('./check-is-role-valid')
+    checkRole: require('./check-is-role-valid'),
+    isUserValid: require('./isUserValid')
 };

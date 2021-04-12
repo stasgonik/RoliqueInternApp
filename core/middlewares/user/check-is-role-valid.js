@@ -1,14 +1,14 @@
 const { ErrorHandler, errorCodes, errorMessages } = require('../../error');
 
-module.exports = (whoHaveAccess = []) => (req, res, next) => {
+module.exports = (whoHasAccess = []) => (req, res, next) => {
     try {
         const { role } = req.user;
 
-        if (!whoHaveAccess.length) {
+        if (!whoHasAccess.length) {
             throw new ErrorHandler(errorCodes.BAD_REQUEST, errorMessages.BAD_REQUEST.customCode, 'Access Denied!');
         }
 
-        if (!whoHaveAccess.includes(role)) {
+        if (!whoHasAccess.includes(role)) {
             throw new ErrorHandler(errorCodes.BAD_REQUEST, errorMessages.BAD_REQUEST.customCode, 'Access Denied!');
         }
 
