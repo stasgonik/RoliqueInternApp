@@ -7,8 +7,6 @@ const {
 
 module.exports = (req, res, next) => {
     try {
-        console.log(req.body);
-
         const { error } = userValidator.validate(req.body);
 
         if (error) {

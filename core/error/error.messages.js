@@ -1,10 +1,14 @@
 module.exports = {
 //    BAD REQUEST
     BAD_REQUEST: {
-        customCode: 4000
+        customCode: 4000,
     },
     WRONG_EMAIL_OF_PASSWORD: {
         customCode: 4001
+    },
+    USER_ALREADY_EXISTS: {
+        customCode: 4002,
+        message: 'User with such email already exists'
     },
     NO_TOKEN: {
         customCode: 4004
