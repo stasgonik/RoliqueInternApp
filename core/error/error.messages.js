@@ -3,6 +3,9 @@ module.exports = {
     BAD_REQUEST: {
         customCode: 4000
     },
+    WRONG_EMAIL_OF_PASSWORD: {
+        customCode: 4001
+    },
     NO_TOKEN: {
         customCode: 4004
     },
@@ -14,4 +17,5 @@ module.exports = {
     USER_NOT_FOUND: {
         customCode: 4042
     },
+
 };

@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-unresolved
 const { OAuth } = require('../database/models');
 
 module.exports = {
