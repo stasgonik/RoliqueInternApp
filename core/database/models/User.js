@@ -3,7 +3,7 @@ const {
     model
 } = require('mongoose');
 
-const { DB_MODEL_NAMES } = require('../../constants');
+const { DATA_BASE_TABLE } = require('../../constants/magic-string.enum');
 
 const userScheme = new Schema({
     first_name: {
@@ -30,4 +30,4 @@ const userScheme = new Schema({
     profile_picture: String, // relative path in the static folder
 });
 
-module.exports = model(DB_MODEL_NAMES.USER, userScheme);
+module.exports = model(DATA_BASE_TABLE.USER, userScheme);

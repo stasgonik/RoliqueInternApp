@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-unresolved
-const { models: { OAuth } } = require('../dataBase');
+const { OAuth } = require('../database/models');
 
 module.exports = {
     getTokenByParams: (params, model) => OAuth.findOne(params).populate(model),
