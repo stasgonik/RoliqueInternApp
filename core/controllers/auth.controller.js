@@ -1,13 +1,14 @@
 const { successMessages } = require('../error');
 const { authService } = require('../services');
-const { tokenizer } = require('../helper');
+const { tokenizer, passwordHasher } = require('../helper');
 
 module.exports = {
     login: async (req, res, next) => {
         try {
-            const { user } = req;
+            const { user, password } = req;
 
-            // TODO password compare ,password from body
+            await passwordHasher.compare(password, user.password);
+
             await authService.deleteTokenByParams({ user_id: user._id });
 
             const token = tokenizer(user.role);
