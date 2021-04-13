@@ -1,9 +1,14 @@
 const router = require('express').Router();
 const { userController } = require('../../controllers');
-const { userMiddleware } = require('../../middlewares');
+const { userMiddleware, fileMiddleware } = require('../../middlewares');
 
-// TODO: check roles
+// TODO: check roles & tokens
 router.get('/', userController.getUsers);
-router.post('/', userMiddleware.isUserValid, userMiddleware.doesUserExist, userController.createUser);
+router.post('/',
+    fileMiddleware.checkFiles,
+    fileMiddleware.checkAvatar,
+    userMiddleware.isUserValid,
+    userMiddleware.doesUserExist,
+    userController.createUser);
 
 module.exports = router;

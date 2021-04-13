@@ -13,6 +13,14 @@ module.exports = {
     NO_TOKEN: {
         customCode: 4004
     },
+    FILE_TOO_BIG: {
+        customCode: 4005,
+        message: 'File is too big'
+    },
+    TOO_MANY_FILES: {
+        customCode: 4006,
+        message: 'You have sent more files that it was expected'
+    },
     // UNAUTHORIZED
     WRONG_TOKEN: {
         customCode: 4011
