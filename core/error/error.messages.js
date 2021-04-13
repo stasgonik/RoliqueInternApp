@@ -10,6 +10,10 @@ module.exports = {
         customCode: 4002,
         message: 'User with such email already exists'
     },
+    BODY_NOT_VALID: {
+        customCode: 4003,
+        message: 'Body not valid!'
+    },
     NO_TOKEN: {
         customCode: 4004
     },
@@ -27,7 +31,8 @@ module.exports = {
     },
     // NOT FOUND
     USER_NOT_FOUND: {
-        customCode: 4042
+        customCode: 4042,
+        message: 'User not found!',
     },
 
 };

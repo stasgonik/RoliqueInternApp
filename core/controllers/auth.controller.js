@@ -41,7 +41,7 @@ module.exports = {
 
             await authService.createToken(tokens, _id);
 
-            res.json(tokens);
+            res.json({ ...tokens, user_id: _id });
         } catch (e) {
             next(e);
         }

@@ -1,12 +1,5 @@
-const {
-    errorCodes,
-    errorMessages,
-    ErrorHandler
-} = require('../../error');
-const {
-    fileConstants,
-    sizeLimits
-} = require('../../constants');
+const { errorCodes, errorMessages, ErrorHandler } = require('../../error');
+const { fileConstants, sizeLimits } = require('../../constants');
 
 function sortFile(mimetypesArr, maxSize, mimetype, filesArr, file, size, name) {
     if (mimetypesArr.includes(mimetype)) {
@@ -59,8 +52,6 @@ module.exports = {
                 const [avatar] = req.photos;
 
                 req.avatar = avatar;
-
-                console.log(avatar);
 
                 next();
             }

@@ -5,18 +5,17 @@ const { publicFields: { User: publicFields } } = require('../config');
 
 module.exports = {
     // if you want to get all the fields, pass onlyPublicInfo = false as parameter
-    getAllUsers: (filterObj = {}, onlyPublicInfo = true) => {
-        return onlyPublicInfo ? User.find(filterObj, publicFields) : User.find(filterObj);
-    },
+    getAllUsers: (filterObj = {}, onlyPublicInfo = true) => (onlyPublicInfo
+        ? User.find(filterObj, publicFields)
+        : User.find(filterObj)),
     // if you want to get all the fields, pass onlyPublicInfo = false as parameter
-    getUserById: (id, onlyPublicInfo = true) => {
-        return onlyPublicInfo ? User.findById(id, publicFields) : User.find(id);
-    },
+    getUserById: (id, onlyPublicInfo = true) => (onlyPublicInfo ? User.findById(id, publicFields) : User.find(id)),
+
+    getSingleUser: (query) => User.findOne(query),
 
     // if you want to get all the fields, pass onlyPublicInfo = false as parameter
-    getUserByEmail: (email, onlyPublicInfo = true) => {
-        return onlyPublicInfo ? User.findOne({ email }, publicFields) : User.findOne({ email });
-    },
+    getUserByEmail: (email, onlyPublicInfo = true) => (onlyPublicInfo ? User.findOne({ email }, publicFields)
+        : User.findOne({ email })),
 
     createUser: (user) => User.create(user),
 
