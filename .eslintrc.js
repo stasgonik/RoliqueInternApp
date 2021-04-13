@@ -20,11 +20,11 @@ module.exports = {
             { caseSensitive: false }
         ],
         'array-bracket-newline': [
-            'error',
+            'warn',
             { minItems: 2 },
         ],
         'array-element-newline': [
-            'error',
+            'warn',
             { minItems: 2 },
         ],
         'arrow-body-style': 'warn',

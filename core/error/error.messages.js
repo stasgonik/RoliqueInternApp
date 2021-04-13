@@ -29,6 +29,10 @@ module.exports = {
     WRONG_TOKEN: {
         customCode: 4011
     },
+    CREATE_FORBIDDEN: {
+        customCode: 4031,
+        message: 'You have no permission to create user with such role'
+    },
     // NOT FOUND
     USER_NOT_FOUND: {
         customCode: 4042,
