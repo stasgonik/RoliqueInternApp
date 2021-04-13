@@ -15,6 +15,10 @@ module.exports = {
     ],
     plugins: [],
     rules: {
+        'import/no-unresolved': [
+            2,
+            { caseSensitive: false }
+        ],
         'array-bracket-newline': [
             'error',
             { minItems: 2 },
@@ -23,7 +27,7 @@ module.exports = {
             'error',
             { minItems: 2 },
         ],
-        'arrow-body-style': 'error',
+        'arrow-body-style': 'warn',
         'block-scoped-var': 'error',
         complexity: 'error',
         'constructor-super': 'error',

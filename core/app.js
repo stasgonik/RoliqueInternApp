@@ -36,6 +36,16 @@ app.use(express.static(path.join(process.cwd(), 'core', 'static')));
 app.use('/', apiRouter);
 app.use('*', notFound);
 
+// eslint-disable-next-line no-unused-vars
+app.use('*', (err, req, res, next) => {
+    res
+        .status(err.status || 500)
+        .json({
+            customCode: err.customCode || 0,
+            message: err.message || ''
+        });
+});
+
 console.log(dotenv);
 
 app.listen(PORT, () => {

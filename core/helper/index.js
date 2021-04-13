@@ -1,3 +1,4 @@
 module.exports = {
-    tokenizer: require('./tokenizer')
+    tokenizer: require('./tokenizer'),
+    passwordHasher: require('./password-hasher')
 };
