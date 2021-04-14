@@ -25,13 +25,17 @@ module.exports = {
         customCode: 4006,
         message: 'You have sent more files that it was expected'
     },
+    USER_DOES_NOT_EXIST: {
+        customCode: 4007,
+        message: 'User that you are trying to update does not exist',
+    },
     // UNAUTHORIZED
     WRONG_TOKEN: {
         customCode: 4011
     },
-    CREATE_FORBIDDEN: {
+    UNAUTHORIZED_ROLE: {
         customCode: 4031,
-        message: 'You have no permission to create user with such role'
+        message: 'You have no permission to create or update user with such role'
     },
     // NOT FOUND
     USER_NOT_FOUND: {

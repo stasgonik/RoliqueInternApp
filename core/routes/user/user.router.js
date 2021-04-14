@@ -6,11 +6,21 @@ router.get('/', userController.getUsers);
 router.post('/',
     authMiddleware.checkAccessToken,
     userMiddleware.checkRole(['admin', 'manager']),
+    userMiddleware.checkRoleRights,
     userMiddleware.isUserValid,
-    userMiddleware.checkCreatePermissions,
+    userMiddleware.doesUserExist(),
     fileMiddleware.checkFiles,
     fileMiddleware.checkAvatar,
-    userMiddleware.doesUserExist,
     userController.createUser);
+
+router.put('/',
+    authMiddleware.checkAccessToken,
+    userMiddleware.checkRole(['admin', 'manager']),
+    userMiddleware.checkRoleRights,
+    userMiddleware.isUserValid,
+    userMiddleware.doesUserExist(false),
+    fileMiddleware.checkFiles,
+    fileMiddleware.checkAvatar,
+    userController.editUser);
 
 module.exports = router;

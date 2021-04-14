@@ -25,4 +25,19 @@ module.exports = {
             next(e);
         }
     },
+    editUser: async (req, res, next) => {
+        const { body } = req;
+
+        try {
+            const userToUpdate = await userService.getUserByEmail(body.email);
+
+            const hashPassword = await passwordHasher.hash(body.password);
+
+            await userService.updateUserById(userToUpdate._id, { ...body, password: hashPassword });
+
+            res.json(successMessages.UPDATE);
+        } catch (e) {
+            next(e);
+        }
+    }
 };
