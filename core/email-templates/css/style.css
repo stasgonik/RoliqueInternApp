@@ -1,9 +1,14 @@
-.activate{
+.activate {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-.title{
+
+.title {
     background: red;
+}
+
+.red {
+    color: red;
 }

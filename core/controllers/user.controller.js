@@ -31,4 +31,19 @@ module.exports = {
             next(e);
         }
     },
+    forgotPassword: async (req, res, next) => {
+        try {
+            const { user, password } = req;
+
+            const passwordHash = await passwordHasher.hash(password);
+
+            console.log(passwordHash);
+            console.log(user);
+            await userService.updateUserById(user.id, { password: passwordHash, forgot_token: null });
+
+            res.json(successMessages.UPDATE);
+        } catch (e) {
+            next(e);
+        }
+    }
 };

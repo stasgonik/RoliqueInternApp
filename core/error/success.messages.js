@@ -19,4 +19,8 @@ module.exports = {
         customCode: 2002,
         message: 'REMOVED'
     },
+    CHECK_EMAIL: {
+        customCode: 2004,
+        message: 'Please check email!'
+    }
 };

@@ -25,9 +25,14 @@ module.exports = {
         customCode: 4006,
         message: 'You have sent more files that it was expected'
     },
+    EMAIL_NOT_VALID: {
+        customCode: 4007,
+        message: 'User email  not valid'
+    },
     // UNAUTHORIZED
     WRONG_TOKEN: {
-        customCode: 4011
+        customCode: 4011,
+        message: 'Wrong token!',
     },
     CREATE_FORBIDDEN: {
         customCode: 4031,
