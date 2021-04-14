@@ -8,7 +8,10 @@ const { magicString: { EMAIL_ACTIONS } } = require('../constants');
 
 module.exports = {
     getUsers: async (req, res, next) => {
-        const { query, responseInfo } = req;
+        const {
+            query,
+            responseInfo
+        } = req;
 
         try {
             const users = await userService.getAllUsers(query, responseInfo);
@@ -27,7 +30,8 @@ module.exports = {
             emailService.sendMail(body.email, EMAIL_ACTIONS.ACTIVATE, {
                 name: body.first_name,
                 email: body.email
-            }).catch((reason) => console.log(reason));
+            })
+                .catch((reason) => console.log(reason));
 
             await userService.createUser({
                 ...body,
@@ -50,6 +54,24 @@ module.exports = {
             await userService.updateUserById(userToUpdate._id, {
                 ...body,
                 password: hashPassword
+            });
+
+            res.json(successMessages.UPDATE);
+        } catch (e) {
+            next(e);
+        }
+    },
+    forgotPassword: async (req, res, next) => {
+        try {
+            const { user, password } = req;
+
+            console.log(user);
+
+            const passwordHash = await passwordHasher.hash(password);
+
+            await userService.updateUserById(user.id, {
+                password: passwordHash,
+                forgot_token: null
             });
 
             res.json(successMessages.UPDATE);

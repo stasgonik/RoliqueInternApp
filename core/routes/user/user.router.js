@@ -27,4 +27,6 @@ router.put('/',
     fileMiddleware.checkAvatar,
     userController.editUser);
 
+router.patch('/forgotPassword', userMiddleware.checkIsForgotPassword, userController.forgotPassword);
+
 module.exports = router;

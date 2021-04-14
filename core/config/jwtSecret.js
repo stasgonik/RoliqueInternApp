@@ -16,4 +16,5 @@ module.exports = {
         [ROLES.MANAGER]: process.env.JWT_ACTIVATE_MANAGER,
         [ROLES.EMPLOYEE]: process.env.JWT_ACTIVATE_EMPLOYEE,
     },
+    JWT_SECRET_FORGOT_TOKEN: process.env.JWT_SECRET_FORGOT_TOKEM,
 };
