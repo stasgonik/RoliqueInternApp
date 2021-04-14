@@ -13,10 +13,10 @@ module.exports = (req, res, next) => {
             body: { role: roleToCreate = ROLES.EMPLOYEE },
         } = req;
 
-        const isClientAllowedToCreate = rolesMatcher(clientRole, roleToCreate);
-        if (!isClientAllowedToCreate) {
+        const isClientAllowed = rolesMatcher(clientRole, roleToCreate);
+        if (!isClientAllowed) {
             throw new ErrorHandler(errorCodes.FORBIDDEN,
-                errorMessages.CREATE_FORBIDDEN.customCode, errorMessages.CREATE_FORBIDDEN.message);
+                errorMessages.UNAUTHORIZED_ROLE.customCode, errorMessages.UNAUTHORIZED_ROLE.message);
         }
 
         next();

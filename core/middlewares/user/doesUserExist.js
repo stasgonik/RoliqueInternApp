@@ -5,16 +5,20 @@ const {
     errorMessages
 } = require('../../error');
 
-module.exports = async (req, res, next) => {
+module.exports = (errorWhenUserExists = true) => async (req, res, next) => {
     const { email } = req.body;
 
     try {
         const userExists = await userService.checkIfUserExistsByEmail(email);
 
-        if (userExists) {
+        if (errorWhenUserExists && userExists) {
             throw new ErrorHandler(errorCodes.BAD_REQUEST,
                 errorMessages.USER_ALREADY_EXISTS.customCode,
                 errorMessages.USER_ALREADY_EXISTS.message);
+        } else if (!errorWhenUserExists && !userExists) {
+            throw new ErrorHandler(errorCodes.BAD_REQUEST,
+                errorMessages.USER_DOES_NOT_EXIST.customCode,
+                errorMessages.USER_DOES_NOT_EXIST.message);
         }
 
         next();
