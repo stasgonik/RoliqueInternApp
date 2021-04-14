@@ -33,6 +33,9 @@ const userScheme = new Schema({
         type: String,
         required: true,
     },
+    forgot_token: {
+        type: String
+    },
     profile_picture: {
         type: String,
         default: ''
