@@ -29,6 +29,10 @@ module.exports = {
     WRONG_TOKEN: {
         customCode: 4011
     },
+    WRONG_MAIL_ACTION: {
+        customCode: 4012,
+        message: 'Wrong mail action!'
+    },
     // NOT FOUND
     USER_NOT_FOUND: {
         customCode: 4042,
