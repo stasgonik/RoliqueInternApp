@@ -5,4 +5,8 @@ module.exports = {
 
     PASSWORD_SALT_VALUE: 10,
     CRON_JOB_PERIOD: process.env.CRON_JOB_PERIOD || '0 1 * * *',
+
+    EMAIL_ROOT: process.env.EMAIL_ROOT || 'rootEmail',
+    EMAIL_ROOT_PASSWORD: process.env.EMAIL_ROOT_PASSWORD || 'rootPassword',
+    EMAIL_SERVICE: process.env.EMAIL_SERVICE || 'gmail',
 };

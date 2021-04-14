@@ -1,6 +1,7 @@
-const { userService } = require('../services');
+const { userService, emailService } = require('../services');
 const { passwordHasher } = require('../helper');
 const { successMessages } = require('../error');
+const { magicString: { EMAIL_ACTIONS } } = require('../constants');
 
 module.exports = {
     getUsers: async (req, res, next) => {
@@ -13,10 +14,15 @@ module.exports = {
         }
     },
     createUser: async (req, res, next) => {
-        const { body } = req;
-
         try {
+            const { body } = req;
+
             const hashPassword = await passwordHasher.hash(body.password);
+
+            await emailService.sendMail(body.email, EMAIL_ACTIONS.ACTIVATE, {
+                name: req.first_name,
+                email: req.email
+            });
 
             await userService.createUser({ ...body, password: hashPassword });
 
