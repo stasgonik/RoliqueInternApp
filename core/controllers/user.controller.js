@@ -1,12 +1,17 @@
-const { userService, emailService } = require('../services');
+const {
+    userService,
+    emailService
+} = require('../services');
 const { passwordHasher } = require('../helper');
 const { successMessages } = require('../error');
 const { magicString: { EMAIL_ACTIONS } } = require('../constants');
 
 module.exports = {
     getUsers: async (req, res, next) => {
+        const { query, responseInfo } = req;
+
         try {
-            const users = await userService.getAllUsers();
+            const users = await userService.getAllUsers(query, responseInfo);
 
             res.json(users);
         } catch (e) {
@@ -19,12 +24,15 @@ module.exports = {
 
             const hashPassword = await passwordHasher.hash(body.password);
 
-            await emailService.sendMail(body.email, EMAIL_ACTIONS.ACTIVATE, {
-                name: req.first_name,
-                email: req.email
-            });
+            emailService.sendMail(body.email, EMAIL_ACTIONS.ACTIVATE, {
+                name: body.first_name,
+                email: body.email
+            }).catch((reason) => console.log(reason));
 
-            await userService.createUser({ ...body, password: hashPassword });
+            await userService.createUser({
+                ...body,
+                password: hashPassword
+            });
 
             res.json(successMessages.CREATE);
         } catch (e) {
@@ -39,7 +47,10 @@ module.exports = {
 
             const hashPassword = await passwordHasher.hash(body.password);
 
-            await userService.updateUserById(userToUpdate._id, { ...body, password: hashPassword });
+            await userService.updateUserById(userToUpdate._id, {
+                ...body,
+                password: hashPassword
+            });
 
             res.json(successMessages.UPDATE);
         } catch (e) {
