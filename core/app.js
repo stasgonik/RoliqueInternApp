@@ -8,6 +8,7 @@ const cors = require('cors');
 
 const { PORT, MONGO_URL, ALLOWED_ORIGIN } = require('./config/config');
 const { apiRouter, notFound } = require('./routes');
+const cronRun = require('./cron-jobs');
 
 const app = express();
 
@@ -52,6 +53,7 @@ console.log(dotenv);
 
 app.listen(PORT, () => {
     console.log(`App listen ${PORT}`);
+    cronRun();
 });
 
 function _connectDb() {
