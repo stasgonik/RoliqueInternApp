@@ -8,7 +8,16 @@ const emailTemplates = require('../email-templates');
 
 const templateParser = new EmailTemplates({
     views: {
-        root: path.join(process.cwd(), 'core', 'email-templates')
+        root: path.join(process.cwd(), 'core', 'email-templates', 'templates'),
+        options: {
+            extension: 'ejs'
+        }
+    },
+    juiceResources: {
+        preserveImportant: true,
+        webResources: {
+            relativeTo: path.join(process.cwd(), 'core', 'email-templates', 'css')
+        }
     }
 });
 
@@ -33,7 +42,7 @@ const sendMail = async (userMail, action, context) => {
         return transporter.sendMail({
             from: EMAIL_ROOT,
             to: userMail,
-            subject: templateInfo.subject,
+            subject: 'Test email service',
             html,
         });
     } catch (e) {
