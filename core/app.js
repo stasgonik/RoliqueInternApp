@@ -1,4 +1,5 @@
 const express = require('express');
+const fileuploader = require('express-fileupload');
 const mongoose = require('mongoose');
 const path = require('path');
 const dotenv = require('dotenv').config();
@@ -29,6 +30,7 @@ const configureCors = (origin, callback) => {
 
 app.use(cors({ origin: configureCors }));
 
+app.use(fileuploader());
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));

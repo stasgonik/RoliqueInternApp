@@ -3,7 +3,10 @@ const {
     model
 } = require('mongoose');
 
-const { DATA_BASE_TABLE } = require('../../constants/magic-string.enum');
+const {
+    DATA_BASE_TABLE,
+    ROLES
+} = require('../../constants/magic-string.enum');
 
 const userScheme = new Schema({
     first_name: {
@@ -24,13 +27,16 @@ const userScheme = new Schema({
     },
     role: {
         type: String,
-        default: 'user',
+        default: ROLES.EMPLOYEE,
     },
     password: {
         type: String,
         required: true,
     },
-    profile_picture: String, // relative path in the static folder
+    profile_picture: {
+        type: String,
+        default: ''
+    }, // relative path in the static folder
 });
 
 module.exports = model(DATA_BASE_TABLE.USER, userScheme);
