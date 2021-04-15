@@ -3,6 +3,8 @@ module.exports = {
         'first_name',
         'last_name',
         'email',
-        'phone'
+        'phone',
+        'role',
+        'profile_picture'
     ],
 };
