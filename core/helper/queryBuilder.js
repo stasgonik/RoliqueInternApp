@@ -22,6 +22,9 @@ module.exports = {
                         $options: 'i'
                     };
                     break;
+                case 'id':
+                    filterObject._id = queryParams.id;
+                    break;
                 default:
                     filterObject[key] = queryParams[key];
             }
