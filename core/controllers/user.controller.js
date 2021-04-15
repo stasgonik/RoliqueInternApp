@@ -1,6 +1,7 @@
 const {
     userService,
-    emailService
+    emailService,
+    fileUploadService
 } = require('../services');
 const { passwordHasher } = require('../helper');
 const { successMessages } = require('../error');
@@ -21,9 +22,23 @@ module.exports = {
             next(e);
         }
     },
+    getUserById: async (req, res, next) => {
+        const { userId } = req.params;
+
+        try {
+            const user = await userService.getUserById(userId);
+
+            res.json(user);
+        } catch (e) {
+            next(e);
+        }
+    },
     createUser: async (req, res, next) => {
         try {
-            const { body } = req;
+            const {
+                body,
+                avatar
+            } = req;
 
             const hashPassword = await passwordHasher.hash(body.password);
 
@@ -33,10 +48,20 @@ module.exports = {
             })
                 .catch((reason) => console.log(reason));
 
-            await userService.createUser({
+            const newUser = await userService.createUser({
                 ...body,
                 password: hashPassword
             });
+
+            if (avatar) {
+                const avatarUploadPath = await fileUploadService.uploadFile(
+                    avatar,
+                    'user',
+                    newUser._id,
+                    'photo'
+                );
+                await userService.updateUserById(newUser._id, { profile_picture: avatarUploadPath });
+            }
 
             res.json(successMessages.CREATE);
         } catch (e) {
@@ -63,7 +88,10 @@ module.exports = {
     },
     forgotPassword: async (req, res, next) => {
         try {
-            const { user, password } = req;
+            const {
+                user,
+                password
+            } = req;
 
             console.log(user);
 

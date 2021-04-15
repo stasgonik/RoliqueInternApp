@@ -7,6 +7,11 @@ router.get('/',
     userMiddleware.buildQueryParams,
     userController.getUsers);
 
+router.get('/:userId',
+    authMiddleware.checkAccessToken,
+    userMiddleware.isUserIdValid,
+    userController.getUserById);
+
 router.post('/',
     authMiddleware.checkAccessToken,
     userMiddleware.checkRole(['admin', 'manager']),
