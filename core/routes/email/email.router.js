@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
-const { emailController } = require('../../../../OktenWeb/RoliqueInternApp/core/controllers');
-const { emailMiddleware } = require('../../../../OktenWeb/RoliqueInternApp/core/middlewares');
+const { emailController } = require('../../controllers');
+const { emailMiddleware } = require('../../middlewares');
 
 router.post('/forgotPassword', emailMiddleware.checkIsUserEmail, emailController.sendForgotToken);
 
