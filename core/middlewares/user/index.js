@@ -5,5 +5,6 @@ module.exports = {
     doesUserExist: require('./doesUserExist'),
     checkRoleRights: require('./checkRoleRights'),
     buildQueryParams: require('./buildQueryParams'),
-    isUserIdValid: require('./isUserIdValid')
+    isUserIdValid: require('./isUserIdValid'),
+    normalizeNames: require('./normalizeNames')
 };

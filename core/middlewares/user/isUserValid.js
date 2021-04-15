@@ -7,7 +7,9 @@ const { userValidator } = require('../../validators');
 
 module.exports = async (req, res, next) => {
     const { role } = req.body;
-    req.body.role = role.toLowerCase();
+    if (role) {
+        req.body.role = role.toLowerCase();
+    }
 
     try {
         const { error } = await userValidator.createUserValid.validate(req.body);

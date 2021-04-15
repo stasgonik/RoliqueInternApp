@@ -21,6 +21,7 @@
     "morgan": "^1.10.0",
     "node-cron": "^3.0.0",
     "nodemailer": "^6.5.0",
+    "normalize-text": "^2.3.2",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
