@@ -10,6 +10,9 @@ module.exports = {
         MANAGER: 'manager',
         EMPLOYEE: 'employee',
     },
+    SOCIAL_NETWORKS: {
+        INSTAGRAM: 'Instagram',
+    },
     EMAIL_ACTIONS: {
         ACTIVATE: 'ACTIVATE',
         FORGOT_PASSWORD: 'FORGOT_PASSWORD',
