@@ -11,7 +11,12 @@ module.exports = {
         EMPLOYEE: 'employee',
     },
     SOCIAL_NETWORKS: {
-        INSTAGRAM: 'Instagram',
+        INSTAGRAM: 'instagram',
+        YOUTUBE: 'youtube',
+        FACEBOOK: 'facebook',
+        TIKTOK: 'tiktok',
+        TWITTER: 'twitter',
+        BLOG: 'blog',
     },
     EMAIL_ACTIONS: {
         ACTIVATE: 'ACTIVATE',
