@@ -21,10 +21,7 @@ const userScheme = new Schema({
         type: String,
         required: true
     },
-    phone: {
-        type: String,
-        default: '',
-    },
+    phone: String,
     role: {
         type: String,
         default: ROLES.EMPLOYEE,
@@ -33,13 +30,8 @@ const userScheme = new Schema({
         type: String,
         required: true,
     },
-    forgot_token: {
-        type: String
-    },
-    profile_picture: {
-        type: String,
-        default: ''
-    }, // relative path in the static folder
+    forgot_token: String,
+    profile_picture: String, // relative path in the static folder
 }, {
     toObject: { virtuals: true },
     toJSON: { virtuals: true }
