@@ -15,7 +15,7 @@ module.exports = {
         message: 'Body not valid!'
     },
     NO_TOKEN: {
-        customCode: 4004
+        customCode: 4014
     },
     FILE_TOO_BIG: {
         customCode: 4005,

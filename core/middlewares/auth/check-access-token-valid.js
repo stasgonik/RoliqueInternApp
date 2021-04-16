@@ -10,13 +10,13 @@ module.exports = async (req, res, next) => {
         const token = req.get(AUTHORIZATION);
 
         if (!token) {
-            throw new ErrorHandler(errorCodes.FORBIDDEN, NO_TOKEN.customCode, 'Token not valid!');
+            throw new ErrorHandler(errorCodes.UNAUTHORIZED, NO_TOKEN.customCode, 'You must send a token to access this page');
         }
 
         const isExistToken = await authService.getTokenByParams({ access_token: token }, 'user_id');
 
         if (!isExistToken) {
-            throw new ErrorHandler(errorCodes.BAD_REQUEST, WRONG_TOKEN.customCode, 'Token not valid!');
+            throw new ErrorHandler(errorCodes.UNAUTHORIZED, WRONG_TOKEN.customCode, 'Token not valid!');
         }
 
         const user = isExistToken.user_id;
