@@ -1,3 +1,4 @@
 module.exports = {
-    isInfluencerValid: require('./isInfluencerValid')
+    isInfluencerValid: require('./isInfluencerValid'),
+    normalizeRequestData: require('./normalizeRequestData'),
 };

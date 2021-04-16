@@ -1,12 +1,10 @@
-const {
-    normalizeText,
-    capitalizeFirstLetter
-} = require('normalize-text');
+const { normalizeText, capitalizeFirstLetter } = require('normalize-text');
 
 module.exports = (req, res, next) => {
     const {
         first_name,
-        last_name
+        last_name,
+        social_profiles
     } = req.body;
     if (!first_name || !last_name) {
         return next();
@@ -20,6 +18,10 @@ module.exports = (req, res, next) => {
     });
 
     [req.body.first_name, req.body.last_name] = namesArr;
+
+    social_profiles.forEach(value => {
+        value.social_network_name = value.social_network_name.toLowerCase();
+    });
 
     next();
 };
