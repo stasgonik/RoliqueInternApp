@@ -1,6 +1,10 @@
-const router = require('express').Router();
+const router = require('express')
+    .Router();
+
 const { influencerController } = require('../../controllers');
-const { influencerMiddleware } = require('../../middlewares');
+const { influencerMiddleware, authMiddleware } = require('../../middlewares');
+
+router.get('/', authMiddleware.checkAccessToken, influencerController.getAllInfluencers);
 
 router.post('/',
     influencerMiddleware.normalizeRequestData,

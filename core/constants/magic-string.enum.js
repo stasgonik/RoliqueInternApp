@@ -21,5 +21,11 @@ module.exports = {
     EMAIL_ACTIONS: {
         ACTIVATE: 'ACTIVATE',
         FORGOT_PASSWORD: 'FORGOT_PASSWORD',
+    },
+    INFLUENCER_STRING: {
+        FIRST_NAME: 'first_name',
+        LAST_NAME: 'last_name',
+        PROFESSION: 'profession',
+        BIRTHDATE: 'birthdate'
     }
 };
