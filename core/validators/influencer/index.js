@@ -1,3 +1,5 @@
 module.exports = {
-    influencerValidator: require('./influencer.validator')
+    createInfluencer: require('./create-influencer.validator'),
+    profileInfluencer: require('./influencer-profiles.validator'),
+    updateInfluencer: require('./update-influencer.validator'),
 };
