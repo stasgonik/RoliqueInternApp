@@ -57,13 +57,6 @@ module.exports = {
                         $options: 'i'
                     };
                     break;
-                case INFLUENCER_STRING.BIRTHDATE:
-                    const lte = +queryParams.birthdate + 1;
-                    filterObject.birthdate = {
-                        $gte: queryParams.birthdate,
-                        $lt: lte.toString()
-                    };
-                    break;
                 default:
                     filterObject[key] = queryParams[key];
             }

@@ -6,7 +6,6 @@ const { queryBuilder } = require('../helper');
 module.exports = {
     getAllInfluencers: (query = {}) => {
         const objectFilter = queryBuilder.influencerObjectFilter(query);
-        console.log(objectFilter);
 
         return Influencer.find(objectFilter);
     },

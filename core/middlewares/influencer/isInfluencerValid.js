@@ -7,7 +7,7 @@ const { influencerValidator } = require('../../validators');
 
 module.exports = (req, res, next) => {
     try {
-        const { error } = influencerValidator.validate(req.body);
+        const { error } = influencerValidator.createInfluencer.validate(req.body);
         if (error) {
             throw new ErrorHandler(errorCodes.BAD_REQUEST, errorMessages.BAD_REQUEST.customCode, error.details[0].message);
         }
