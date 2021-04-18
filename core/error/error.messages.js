@@ -24,7 +24,7 @@ module.exports = {
     },
     TOO_MANY_FILES: {
         customCode: 4006,
-        message: 'You have sent more files that it was expected'
+        message: 'You have sent more files than it was expected'
     },
     USER_DOES_NOT_EXIST: {
         customCode: 4007,
