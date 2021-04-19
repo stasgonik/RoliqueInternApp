@@ -24,15 +24,9 @@ const influencerScheme = new Schema({
         type: String,
         required: true
     },
-    birthdate: {
-        type: String,
-        default: '',
-    },
+    birthdate: Date,
     social_profiles: [socialProfilesScheme],
-    profile_picture: {
-        type: String,
-        default: ''
-    }, // relative path in the static folder
+    profile_picture: String, // relative path in the static folder
 }, {
     toObject: { virtuals: true },
     toJSON: { virtuals: true }

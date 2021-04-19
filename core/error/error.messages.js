@@ -24,11 +24,15 @@ module.exports = {
     },
     TOO_MANY_FILES: {
         customCode: 4006,
-        message: 'You have sent more files that it was expected'
+        message: 'You have sent more files than it was expected'
     },
     USER_DOES_NOT_EXIST: {
         customCode: 4007,
         message: 'User that you are trying to update does not exist',
+    },
+    INFLUENCER_ALREADY_EXISTS: {
+        customCode: 4008,
+        message: 'Influencer with the same social profile already exists',
     },
     // UNAUTHORIZED
     WRONG_TOKEN: {

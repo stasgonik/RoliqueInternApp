@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { userController } = require('../../controllers');
 const { userMiddleware, fileMiddleware, authMiddleware } = require('../../middlewares');
+const { ROLES } = require('../../constants/magic-string.enum');
 
 router.get('/',
     authMiddleware.checkAccessToken,
@@ -14,7 +15,7 @@ router.get('/:userId',
 
 router.post('/',
     authMiddleware.checkAccessToken,
-    userMiddleware.checkRole(['admin', 'manager']),
+    userMiddleware.checkRole([ROLES.ADMIN, ROLES.MANAGER]),
     userMiddleware.normalizeNames,
     userMiddleware.isUserValid,
     userMiddleware.checkRoleRights,
