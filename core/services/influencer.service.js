@@ -1,9 +1,14 @@
 const mongoose = require('mongoose');
 
 const { Influencer } = require('../database/models');
+const { queryBuilder } = require('../helper');
 
 module.exports = {
-    getAllInfluencers: (filterObj = {}) => Influencer.find(filterObj),
+    getAllInfluencers: (query = {}) => {
+        const objectFilter = queryBuilder.influencerObjectFilter(query);
+
+        return Influencer.find(objectFilter);
+    },
 
     getInfluencerById: (id) => Influencer.findById(id),
 

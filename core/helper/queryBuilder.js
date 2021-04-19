@@ -1,3 +1,5 @@
+const { magicString: { INFLUENCER_STRING } } = require('../constants');
+
 module.exports = {
     userQueryBuilder: (queryParams) => {
         const filterObject = {};
@@ -30,6 +32,35 @@ module.exports = {
             }
         }
 
+        return filterObject;
+    },
+    influencerObjectFilter: (queryParams) => {
+        const filterObject = {};
+
+        for (const key in queryParams) {
+            switch (key) {
+                case INFLUENCER_STRING.FIRST_NAME:
+                    filterObject.first_name = {
+                        $regex: queryParams.first_name,
+                        $options: 'i'
+                    };
+                    break;
+                case INFLUENCER_STRING.LAST_NAME:
+                    filterObject.last_name = {
+                        $regex: queryParams.last_name,
+                        $options: 'i'
+                    };
+                    break;
+                case INFLUENCER_STRING.PROFESSION:
+                    filterObject.profession = {
+                        $regex: queryParams.profession,
+                        $options: 'i'
+                    };
+                    break;
+                default:
+                    filterObject[key] = queryParams[key];
+            }
+        }
         return filterObject;
     },
 };
