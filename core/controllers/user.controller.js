@@ -23,9 +23,9 @@ module.exports = {
         }
     },
     getUserById: async (req, res, next) => {
-        const { userId } = req.params;
-
         try {
+            const { userId } = req.params;
+
             const user = await userService.getUserById(userId);
 
             res.json(user);
@@ -60,7 +60,8 @@ module.exports = {
                     newUser._id,
                     'photo'
                 );
-                await userService.updateUserById(newUser._id, { profile_picture: avatarUploadPath });
+                const avatarPath = avatarUploadPath.split('\\').join('/');
+                await userService.updateUserById(newUser._id, { profile_picture: avatarPath });
             }
 
             res.json(successMessages.CREATE);
@@ -69,9 +70,9 @@ module.exports = {
         }
     },
     editUser: async (req, res, next) => {
-        const { body } = req;
-
         try {
+            const { body } = req;
+
             const userToUpdate = await userService.getUserByEmail(body.email);
 
             const hashPassword = await passwordHasher.hash(body.password);
@@ -92,8 +93,6 @@ module.exports = {
                 user,
                 password
             } = req;
-
-            console.log(user);
 
             const passwordHash = await passwordHasher.hash(password);
 
