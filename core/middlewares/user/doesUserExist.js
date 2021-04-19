@@ -6,9 +6,9 @@ const {
 } = require('../../error');
 
 module.exports = (errorWhenUserExists = true) => async (req, res, next) => {
-    const { email } = req.body;
-
     try {
+        const { email } = req.body;
+
         const userExists = await userService.checkIfUserExistsByEmail(email);
 
         if (errorWhenUserExists && userExists) {

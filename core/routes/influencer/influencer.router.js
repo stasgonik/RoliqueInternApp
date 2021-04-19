@@ -14,7 +14,10 @@ router.get('/', authMiddleware.checkAccessToken, influencerController.getAllInfl
 
 router.post('/',
     authMiddleware.checkAccessToken,
-    userMiddleware.checkRole([ROLES.ADMIN, ROLES.MANAGER]),
+    userMiddleware.checkRole([
+        ROLES.ADMIN,
+        ROLES.MANAGER
+    ]),
     influencerMiddleware.normalizeRequestData,
     influencerMiddleware.isInfluencerValid,
     influencerMiddleware.doesInfluencerExist,

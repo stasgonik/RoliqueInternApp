@@ -6,12 +6,12 @@ const {
 const { influencerService } = require('../../services');
 
 module.exports = async (req, res, next) => {
-    const { social_profiles } = req.body;
-    if (!social_profiles) {
-        return next();
-    }
-
     try {
+        const { social_profiles } = req.body;
+        if (!social_profiles) {
+            return next();
+        }
+
         const searchArr = social_profiles.map(socialProfile => ({
             'social_profiles.social_network_name': socialProfile.social_network_name,
             'social_profiles.social_network_profile': socialProfile.social_network_profile

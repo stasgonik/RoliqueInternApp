@@ -6,9 +6,9 @@ const {
 const { userService } = require('../../services');
 
 module.exports = async (req, res, next) => {
-    const { userId } = req.params;
-
     try {
+        const { userId } = req.params;
+
         const isValid = await userService.isIdValid(userId);
 
         if (!isValid) {
