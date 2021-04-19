@@ -14,7 +14,10 @@ router.get('/:userId',
 
 router.post('/',
     authMiddleware.checkAccessToken,
-    userMiddleware.checkRole(['admin', 'manager']),
+    userMiddleware.checkRole([
+        'admin',
+        'manager'
+    ]),
     userMiddleware.normalizeNames,
     userMiddleware.isUserValid,
     userMiddleware.checkRoleRights,
@@ -25,7 +28,10 @@ router.post('/',
 
 router.put('/',
     authMiddleware.checkAccessToken,
-    userMiddleware.checkRole(['admin', 'manager']),
+    userMiddleware.checkRole([
+        'admin',
+        'manager'
+    ]),
     userMiddleware.normalizeNames,
     userMiddleware.isUserValid,
     userMiddleware.checkRoleRights,
