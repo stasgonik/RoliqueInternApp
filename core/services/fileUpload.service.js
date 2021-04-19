@@ -18,6 +18,13 @@ async function _uploadFile(file, staticSubfolderName, itemId, itemType) {
     return fullRelativePath;
 }
 
+function deleteFile(filePath, pathName = '') {
+    const folder = path.join(process.cwd(), 'core', 'static', pathName, filePath);
+    console.log(folder);
+    fs.rmdir(folder, { recursive: true });
+}
+
 module.exports = {
-    uploadFile: (file, staticSubfolderName, itemId, itemType) => _uploadFile(file, staticSubfolderName, itemId, itemType)
+    uploadFile: (file, staticSubfolderName, itemId, itemType) => _uploadFile(file, staticSubfolderName, itemId, itemType),
+    deleteFile,
 };
