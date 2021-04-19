@@ -3,12 +3,14 @@ const {
     capitalizeFirstLetter
 } = require('normalize-text');
 
+const zeroTimeStr = '00:00:00 GMT';
+
 module.exports = (req, res, next) => {
     try {
         const {
             first_name,
             last_name,
-            social_profiles
+            social_profiles,
         } = req.body;
 
         if (first_name && last_name) {
@@ -32,6 +34,13 @@ module.exports = (req, res, next) => {
             social_profiles.forEach(value => {
                 value.social_network_name = value.social_network_name.toLowerCase();
             });
+        }
+
+        let { birthdate } = req.body;
+        if (birthdate) {
+            birthdate = birthdate.concat(' ', zeroTimeStr);
+
+            req.body.birthdate = birthdate;
         }
 
         next();
