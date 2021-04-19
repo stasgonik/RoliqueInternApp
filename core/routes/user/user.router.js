@@ -1,6 +1,11 @@
-const router = require('express').Router();
+const router = require('express')
+    .Router();
 const { userController } = require('../../controllers');
-const { userMiddleware, fileMiddleware, authMiddleware } = require('../../middlewares');
+const {
+    userMiddleware,
+    fileMiddleware,
+    authMiddleware
+} = require('../../middlewares');
 const { ROLES } = require('../../constants/magic-string.enum');
 
 router.get('/',
@@ -15,7 +20,10 @@ router.get('/:userId',
 
 router.post('/',
     authMiddleware.checkAccessToken,
-    userMiddleware.checkRole([ROLES.ADMIN, ROLES.MANAGER]),
+    userMiddleware.checkRole([
+        ROLES.ADMIN,
+        ROLES.MANAGER
+    ]),
     userMiddleware.normalizeNames,
     userMiddleware.isUserValid,
     userMiddleware.checkRoleRights,
@@ -24,13 +32,17 @@ router.post('/',
     fileMiddleware.checkAvatar,
     userController.createUser);
 
-router.put('/',
+router.put('/:userId',
     authMiddleware.checkAccessToken,
-    userMiddleware.checkRole(['admin', 'manager']),
+    userMiddleware.isUserIdValid,
+    userMiddleware.checkRole([
+        ROLES.ADMIN,
+        ROLES.MANAGER,
+        ROLES.EMPLOYEE
+    ]),
     userMiddleware.normalizeNames,
-    userMiddleware.isUserValid,
+    userMiddleware.checkIsUpdateUser,
     userMiddleware.checkRoleRights,
-    userMiddleware.doesUserExist(false),
     fileMiddleware.checkFiles,
     fileMiddleware.checkAvatar,
     userController.editUser);

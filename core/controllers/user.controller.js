@@ -60,7 +60,8 @@ module.exports = {
                     newUser._id,
                     'photo'
                 );
-                const avatarPath = avatarUploadPath.split('\\').join('/');
+                const avatarPath = avatarUploadPath.split('\\')
+                    .join('/');
                 await userService.updateUserById(newUser._id, { profile_picture: avatarPath });
             }
 
@@ -71,15 +72,16 @@ module.exports = {
     },
     editUser: async (req, res, next) => {
         try {
-            const { body } = req;
+            const {
+                body,
+                params: { userId }
+            } = req;
 
-            const userToUpdate = await userService.getUserByEmail(body.email);
-
-            const hashPassword = await passwordHasher.hash(body.password);
-
-            await userService.updateUserById(userToUpdate._id, {
+            if (body.password) {
+                req.body.password = await passwordHasher.hash(body.password);
+            }
+            await userService.updateUserById(userId, {
                 ...body,
-                password: hashPassword
             });
 
             res.json(successMessages.UPDATE);
