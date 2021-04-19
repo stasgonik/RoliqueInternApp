@@ -11,12 +11,13 @@ const {
 const { ROLES } = require('../../constants/magic-string.enum');
 
 router.get('/', authMiddleware.checkAccessToken, influencerController.getAllInfluencers);
-// TODO: middleware to check if there are any influencers with the same account name
+
 router.post('/',
     authMiddleware.checkAccessToken,
     userMiddleware.checkRole([ROLES.ADMIN, ROLES.MANAGER]),
     influencerMiddleware.normalizeRequestData,
     influencerMiddleware.isInfluencerValid,
+    influencerMiddleware.doesInfluencerExist,
     fileMiddleware.checkFiles,
     fileMiddleware.checkAvatar,
     influencerController.createInfluencer);

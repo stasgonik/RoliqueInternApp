@@ -30,6 +30,10 @@ module.exports = {
         customCode: 4007,
         message: 'User that you are trying to update does not exist',
     },
+    INFLUENCER_ALREADY_EXISTS: {
+        customCode: 4008,
+        message: 'Influencer with the same social profile already exists',
+    },
     // UNAUTHORIZED
     WRONG_TOKEN: {
         customCode: 4011
