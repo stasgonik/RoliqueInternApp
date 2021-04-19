@@ -74,11 +74,28 @@ module.exports = {
         try {
             const {
                 body,
-                params: { userId }
+                params: { userId },
+                avatar,
+                user
             } = req;
 
+            console.log(user);
             if (body.password) {
                 req.body.password = await passwordHasher.hash(body.password);
+            }
+            if (avatar) {
+                if (user.profile_picture) {
+                    await fileUploadService.deleteFile(user.profile_picture);
+                }
+                const avatarUploadPath = await fileUploadService.uploadFile(
+                    avatar,
+                    'user',
+                    userId,
+                    'photo'
+                );
+                const avatarPath = avatarUploadPath.split('\\')
+                    .join('/');
+                await userService.updateUserById(userId, { profile_picture: avatarPath });
             }
             await userService.updateUserById(userId, {
                 ...body,
