@@ -2,7 +2,14 @@ const jwt = require('jsonwebtoken');
 
 const { jwtSecret: { JWT_SECRET } } = require('../../config');
 const { magicString: { AUTHORIZATION } } = require('../../constants');
-const { errorMessages: { NO_TOKEN, WRONG_TOKEN }, errorCodes, ErrorHandler } = require('../../error');
+const {
+    errorMessages: {
+        NO_TOKEN,
+        WRONG_TOKEN
+    },
+    errorCodes,
+    ErrorHandler
+} = require('../../error');
 const { authService } = require('../../services');
 
 module.exports = async (req, res, next) => {

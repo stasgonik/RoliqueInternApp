@@ -23,9 +23,9 @@ module.exports = {
         }
     },
     getUserById: async (req, res, next) => {
-        const { userId } = req.params;
-
         try {
+            const { userId } = req.params;
+
             const user = await userService.getUserById(userId);
 
             res.json(user);
@@ -60,7 +60,9 @@ module.exports = {
                     newUser._id,
                     'photo'
                 );
-                await userService.updateUserById(newUser._id, { profile_picture: avatarUploadPath });
+                const avatarPath = avatarUploadPath.split('\\')
+                    .join('/');
+                await userService.updateUserById(newUser._id, { profile_picture: avatarPath });
             }
 
             res.json(successMessages.CREATE);
@@ -69,16 +71,34 @@ module.exports = {
         }
     },
     editUser: async (req, res, next) => {
-        const { body } = req;
-
         try {
-            const userToUpdate = await userService.getUserByEmail(body.email);
+            const {
+                body,
+                params: { userId },
+                avatar,
+                user
+            } = req;
 
-            const hashPassword = await passwordHasher.hash(body.password);
-
-            await userService.updateUserById(userToUpdate._id, {
+            console.log(user);
+            if (body.password) {
+                req.body.password = await passwordHasher.hash(body.password);
+            }
+            if (avatar) {
+                if (user.profile_picture) {
+                    await fileUploadService.deleteFile(user.profile_picture);
+                }
+                const avatarUploadPath = await fileUploadService.uploadFile(
+                    avatar,
+                    'user',
+                    userId,
+                    'photo'
+                );
+                const avatarPath = avatarUploadPath.split('\\')
+                    .join('/');
+                await userService.updateUserById(userId, { profile_picture: avatarPath });
+            }
+            await userService.updateUserById(userId, {
                 ...body,
-                password: hashPassword
             });
 
             res.json(successMessages.UPDATE);
@@ -92,8 +112,6 @@ module.exports = {
                 user,
                 password
             } = req;
-
-            console.log(user);
 
             const passwordHash = await passwordHasher.hash(password);
 
