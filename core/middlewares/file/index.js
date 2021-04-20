@@ -9,8 +9,6 @@ const {
 } = require('../../constants');
 
 function sortFile(mimetypesArr, maxSize, mimetype, filesArr, file, size, name) {
-    console.log(mimetypesArr);
-    console.log(mimetype);
     if (mimetypesArr.includes(mimetype)) {
         if (size > maxSize) {
             throw new ErrorHandler(errorCodes.BAD_REQUEST,
