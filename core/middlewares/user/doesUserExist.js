@@ -21,6 +21,7 @@ module.exports = (errorWhenUserExists = true) => async (req, res, next) => {
                 errorMessages.USER_DOES_NOT_EXIST.message);
         }
 
+        console.log(req.body);
         next();
     } catch (e) {
         next(e);
