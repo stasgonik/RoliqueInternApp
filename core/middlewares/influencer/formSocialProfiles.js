@@ -16,12 +16,12 @@ module.exports = (req, res, next) => {
             const [leftPart] = requestKey.split('_');
 
             if (allNetworks.includes(leftPart)) {
-                const profileName = body[`${leftPart}_url`];
-                const profileFollowers = body[`${leftPart}_number`];
+                const profileName = body[`${leftPart}_profile`];
+                const profileFollowers = body[`${leftPart}_followers`];
 
                 if (!profileName || !profileFollowers) {
                     throw new ErrorHandler(errorCodes.BAD_REQUEST, errorMessages.BAD_SOCIAL_PROFILE.customCode,
-                        `You must send both ${leftPart}_url and ${leftPart}_number`);
+                        `You must send both ${leftPart}_profile and ${leftPart}_followers`);
                 }
 
                 social_profiles.push({
@@ -30,8 +30,8 @@ module.exports = (req, res, next) => {
                     social_network_followers: profileFollowers
                 });
 
-                delete body[`${leftPart}_url`];
-                delete body[`${leftPart}_number`];
+                delete body[`${leftPart}_profile`];
+                delete body[`${leftPart}_followers`];
             }
         }
 
