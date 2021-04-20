@@ -10,7 +10,6 @@ module.exports = (req, res, next) => {
         const {
             first_name,
             last_name,
-            social_profiles,
         } = req.body;
 
         if (first_name && last_name) {
@@ -28,12 +27,6 @@ module.exports = (req, res, next) => {
                 req.body.first_name,
                 req.body.last_name
             ] = namesArr;
-        }
-
-        if (social_profiles) {
-            social_profiles.forEach(value => {
-                value.social_network_name = value.social_network_name.toLowerCase();
-            });
         }
 
         let { birthdate } = req.body;
