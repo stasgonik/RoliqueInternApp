@@ -2,15 +2,38 @@ const express = require('express');
 const fileuploader = require('express-fileupload');
 const mongoose = require('mongoose');
 const path = require('path');
-const dotenv = require('dotenv').config();
+const dotenv = require('dotenv')
+    .config();
 const morgan = require('morgan');
 const cors = require('cors');
 
-const { PORT, MONGO_URL, ALLOWED_ORIGIN } = require('./config/config');
-const { apiRouter, notFound } = require('./routes');
+const {
+    PORT,
+    MONGO_URL,
+    ALLOWED_ORIGIN
+} = require('./config/config');
+const {
+    apiRouter,
+    notFound
+} = require('./routes');
 const cronRun = require('./cron-jobs');
 
 const app = express();
+
+const _connectDb = async () => {
+    await mongoose.connect(MONGO_URL, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    });
+
+    console.log('db connected..!');
+
+    const { connection } = mongoose;
+
+    connection.on('error', (error) => {
+        console.log(error);
+    });
+};
 
 _connectDb();
 
@@ -55,13 +78,3 @@ app.listen(PORT, () => {
     console.log(`App listen ${PORT}`);
     cronRun();
 });
-
-function _connectDb() {
-    mongoose.connect(MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true });
-
-    const { connection } = mongoose;
-
-    connection.on('error', (error) => {
-        console.log(error);
-    });
-}

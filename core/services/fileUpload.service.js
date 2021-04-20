@@ -20,7 +20,6 @@ async function _uploadFile(file, staticSubfolderName, itemId, itemType) {
 
 function deleteFile(filePath, pathName = '') {
     const folder = path.join(process.cwd(), 'core', 'static', pathName, filePath);
-    console.log(folder);
     fs.rmdir(folder, { recursive: true });
 }
 
