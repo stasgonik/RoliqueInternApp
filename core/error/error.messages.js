@@ -34,6 +34,9 @@ module.exports = {
         customCode: 4008,
         message: 'Influencer with the same social profile already exists',
     },
+    BAD_SOCIAL_PROFILE: {
+        customCode: 4009
+    },
     // UNAUTHORIZED
     WRONG_TOKEN: {
         customCode: 4011

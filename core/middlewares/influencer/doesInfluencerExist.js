@@ -8,7 +8,7 @@ const { influencerService } = require('../../services');
 module.exports = async (req, res, next) => {
     try {
         const { social_profiles } = req.body;
-        if (!social_profiles) {
+        if (!social_profiles.length) {
             return next();
         }
 

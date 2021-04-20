@@ -18,6 +18,7 @@ router.post('/',
         ROLES.ADMIN,
         ROLES.MANAGER
     ]),
+    influencerMiddleware.formSocialProfiles,
     influencerMiddleware.normalizeRequestData,
     influencerMiddleware.isInfluencerValid,
     influencerMiddleware.doesInfluencerExist,
