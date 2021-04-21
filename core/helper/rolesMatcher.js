@@ -5,6 +5,9 @@ const createRights = {
     [ROLES.MANAGER]: [
         ROLES.MANAGER,
         ROLES.EMPLOYEE
+    ],
+    [ROLES.EMPLOYEE]: [
+        ROLES.EMPLOYEE
     ]
 };
 // checks if client with clientRole is allowed to create/update user with userRole

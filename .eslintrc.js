@@ -60,6 +60,7 @@ module.exports = {
         'no-console': 'warn',
         'no-else-return': 'error',
         'no-empty': 'off',
+        'prefer-arrow-callback': 'warn',
         'no-plusplus': 'off',
         'no-empty-functions': 'off',
         'consistent-return': 'off',

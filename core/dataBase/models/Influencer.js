@@ -27,6 +27,10 @@ const influencerScheme = new Schema({
     },
     birthdate: Date,
     social_profiles: [socialProfilesScheme],
+    user_name: {
+        type: String,
+        default: '—'
+    },
     profile_picture: String, // relative path in the static folder
 }, {
     toObject: { virtuals: true },
@@ -37,13 +41,35 @@ influencerScheme.virtual('full_name').get(function() {
     return `${this.first_name} ${this.last_name}`;
 });
 
-influencerScheme.virtual('user_name').get(function() {
-    return getUsername(this);
+influencerScheme.post('save', function(doc) {
+    const newUsername = getUsername(doc);
+    if (doc.user_name === newUsername) {
+        return;
+    }
+
+    doc.user_name = newUsername;
+    doc.save();
 });
 
+influencerScheme.post(/update/, async function() {
+    const doc = await this.model.findOne(this.getQuery());
+
+    const newUsername = getUsername(doc);
+    if (doc.user_name === newUsername) {
+        return;
+    }
+
+    doc.user_name = newUsername;
+    doc.save();
+});
+
+// influencerScheme.virtual('user_name').get(function() {
+//     return getUsername(this);
+// });
+
 function getUsername(influencerModel) {
-    if (!influencerModel.social_profiles.length) {
-        return '-';
+    if (!influencerModel.social_profiles || !influencerModel.social_profiles.length) {
+        return '—';
     }
 
     for (const socialNetwork of socialNetworksPrio) {
@@ -54,7 +80,7 @@ function getUsername(influencerModel) {
         }
     }
 
-    return '-';
+    return '—';
 }
 
 module.exports = model(DATA_BASE_TABLE.INFLUENCER, influencerScheme);

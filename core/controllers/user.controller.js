@@ -1,7 +1,7 @@
 const {
     userService,
     emailService,
-    fileUploadService
+    fileService
 } = require('../services');
 const { passwordHasher } = require('../helper');
 const { successMessages } = require('../error');
@@ -48,22 +48,18 @@ module.exports = {
             })
                 .catch((reason) => console.log(reason));
 
-            const newUser = await userService.createUser({
-                ...body,
+            if (avatar) {
+                const cloudResponse = await fileService.uploadFile(avatar);
+                req.body = {
+                    ...req.body,
+                    profile_picture: cloudResponse.url
+                };
+            }
+
+            await userService.createUser({
+                ...req.body,
                 password: hashPassword
             });
-
-            if (avatar) {
-                const avatarUploadPath = await fileUploadService.uploadFile(
-                    avatar,
-                    'user',
-                    newUser._id,
-                    'photo'
-                );
-                const avatarPath = avatarUploadPath.split('\\')
-                    .join('/');
-                await userService.updateUserById(newUser._id, { profile_picture: avatarPath });
-            }
 
             res.json(successMessages.CREATE);
         } catch (e) {
@@ -73,32 +69,26 @@ module.exports = {
     editUser: async (req, res, next) => {
         try {
             const {
-                body,
                 params: { userId },
                 avatar,
                 user
             } = req;
 
-            console.log(user);
-            if (body.password) {
-                req.body.password = await passwordHasher.hash(body.password);
+            if (req.body.password) {
+                req.body.password = await passwordHasher.hash(req.body.password);
             }
             if (avatar) {
                 if (user.profile_picture) {
-                    await fileUploadService.deleteFile(user.profile_picture);
+                    await fileService.removeFile(user.profile_picture);
                 }
-                const avatarUploadPath = await fileUploadService.uploadFile(
-                    avatar,
-                    'user',
-                    userId,
-                    'photo'
-                );
-                const avatarPath = avatarUploadPath.split('\\')
-                    .join('/');
-                await userService.updateUserById(userId, { profile_picture: avatarPath });
+                const cloudResponse = await fileService.uploadFile(avatar);
+                req.body = {
+                    ...req.body,
+                    profile_picture: cloudResponse.url
+                };
             }
             await userService.updateUserById(userId, {
-                ...body,
+                ...req.body,
             });
 
             res.json(successMessages.UPDATE);
