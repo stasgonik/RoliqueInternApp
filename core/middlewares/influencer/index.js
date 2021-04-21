@@ -3,5 +3,6 @@ module.exports = {
     isInfluencerValid: require('./isInfluencerValid'),
     normalizeRequestData: require('./normalizeRequestData'),
     doesInfluencerExist: require('./doesInfluencerExist'),
-    formSocialProfiles: require('./formSocialProfiles')
+    formSocialProfiles: require('./formSocialProfiles'),
+    updateSocialProfiles: require('./updateSocialProfiles'),
 };

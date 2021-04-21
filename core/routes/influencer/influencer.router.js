@@ -29,6 +29,7 @@ router.post('/',
 router.get('/:id', authMiddleware.checkAccessToken, influencerController.getInfluencerById);
 router.put('/:id',
     authMiddleware.checkAccessToken,
+    influencerMiddleware.updateSocialProfiles,
     influencerMiddleware.checkIsUpdateInfluencer,
     influencerController.updateInfluencer);
 

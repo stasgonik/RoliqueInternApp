@@ -50,22 +50,11 @@ influencerScheme.post('save', function(doc) {
     doc.user_name = newUsername;
     doc.save();
 });
-
+// redirect to previous hook
 influencerScheme.post(/update/, async function() {
     const doc = await this.model.findOne(this.getQuery());
-
-    const newUsername = getUsername(doc);
-    if (doc.user_name === newUsername) {
-        return;
-    }
-
-    doc.user_name = newUsername;
     doc.save();
 });
-
-// influencerScheme.virtual('user_name').get(function() {
-//     return getUsername(this);
-// });
 
 function getUsername(influencerModel) {
     if (!influencerModel.social_profiles || !influencerModel.social_profiles.length) {
