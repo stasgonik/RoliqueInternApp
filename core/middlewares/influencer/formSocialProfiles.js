@@ -1,4 +1,4 @@
-const { SOCIAL_NETWORKS } = require('../../constants/magic-string.enum');
+const { magicString: { SOCIAL_NETWORKS } } = require('../../constants');
 const {
     ErrorHandler,
     errorCodes,

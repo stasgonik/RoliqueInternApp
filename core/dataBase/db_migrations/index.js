@@ -1,8 +1,12 @@
 const mongoose = require('mongoose');
-const { MONGO_URL } = require('../../config/config');
+
+const { config: { MONGO_URL } } = require('../../config');
 
 function _connectDb() {
-    mongoose.connect(MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true });
+    mongoose.connect(MONGO_URL, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    });
 
     const { connection } = mongoose;
 
