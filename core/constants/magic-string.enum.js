@@ -26,6 +26,15 @@ module.exports = {
         FIRST_NAME: 'first_name',
         LAST_NAME: 'last_name',
         PROFESSION: 'profession',
-        BIRTHDATE: 'birthdate'
+        BIRTHDATE: 'birthdate',
+        SEARCH: 'search'
+    },
+    USER_STRING: {
+        FIRST_NAME: 'first_name',
+        LAST_NAME: 'last_name',
+        EMAIL: 'email',
+        ID: 'id',
+        BIRTHDATE: 'birthdate',
+        SEARCH: 'search'
     }
 };
