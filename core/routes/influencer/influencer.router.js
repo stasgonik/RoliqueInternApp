@@ -1,5 +1,4 @@
-const router = require('express')
-    .Router();
+const router = require('express').Router();
 
 const { influencerController } = require('../../controllers');
 const {
@@ -8,7 +7,7 @@ const {
     userMiddleware,
     fileMiddleware
 } = require('../../middlewares');
-const { ROLES } = require('../../constants/magic-string.enum');
+const { magicString: { ROLES } } = require('../../constants');
 
 router.get('/', authMiddleware.checkAccessToken, influencerController.getAllInfluencers);
 

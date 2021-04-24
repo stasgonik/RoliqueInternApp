@@ -1,4 +1,4 @@
-const { ROLES } = require('../constants/magic-string.enum');
+const { magicString: { ROLES } } = require('../constants');
 
 const createRights = {
     [ROLES.ADMIN]: Object.values(ROLES), // admin is allowed to create any role

@@ -1,9 +1,6 @@
-// eslint-disable-next-line no-unused-vars
-const mongoose = require('../../../core/database/db_migrations');
-const { User } = require('../../../core/database/models');
+const { User } = require('../../models');
 
 async function up() {
-    console.log(User);
     await User.create({
         role: 'admin',
         first_name: 'Admin',

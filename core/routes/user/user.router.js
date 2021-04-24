@@ -1,12 +1,12 @@
-const router = require('express')
-    .Router();
+const router = require('express').Router();
+
 const { userController } = require('../../controllers');
 const {
     userMiddleware,
     fileMiddleware,
     authMiddleware
 } = require('../../middlewares');
-const { ROLES } = require('../../constants/magic-string.enum');
+const { magicString: { ROLES } } = require('../../constants');
 
 router.get('/',
     authMiddleware.checkAccessToken,

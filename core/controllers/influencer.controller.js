@@ -1,4 +1,7 @@
-const { influencerService, fileUploadService } = require('../services');
+const {
+    influencerService,
+    fileService
+} = require('../services');
 const {
     ErrorHandler,
     errorCodes,
@@ -33,20 +36,17 @@ module.exports = {
         }
     },
     createInfluencer: async (req, res, next) => {
-        const { body, avatar } = req;
-
         try {
-            const newInfluencer = await influencerService.createInfluencer(body);
+            const {
+                avatar
+            } = req;
 
             if (avatar) {
-                const avatarUploadPath = await fileUploadService.uploadFile(
-                    avatar,
-                    'influencer',
-                    newInfluencer._id,
-                    'photo'
-                );
-                await influencerService.updateInfluencerById(newInfluencer._id, { profile_picture: avatarUploadPath });
+                const { url } = await fileService.uploadFile(avatar);
+                req.body = { ...req.body, profile_picture: url };
             }
+
+            await influencerService.createInfluencer(req.body);
 
             res.send(successMessages.CREATE);
         } catch (e) {

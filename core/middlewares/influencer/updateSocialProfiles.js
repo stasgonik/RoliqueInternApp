@@ -1,4 +1,4 @@
-const { SOCIAL_NETWORKS } = require('../../constants/magic-string.enum');
+const { magicString: { SOCIAL_NETWORKS } } = require('../../constants');
 const {
     ErrorHandler,
     errorCodes,
@@ -7,7 +7,10 @@ const {
 const { influencerService } = require('../../services');
 
 module.exports = async (req, res, next) => {
-    const { body, params: { id } } = req;
+    const {
+        body,
+        params: { id }
+    } = req;
     const allNetworks = Object.values(SOCIAL_NETWORKS);
 
     try {
