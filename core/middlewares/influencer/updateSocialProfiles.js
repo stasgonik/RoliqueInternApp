@@ -28,12 +28,14 @@ module.exports = async (req, res, next) => {
             if (allNetworks.includes(leftPart)) {
                 wasChange = true;
 
-                const profileName = body[`${leftPart}_profile`];
-                const profileFollowers = body[`${leftPart}_followers`];
+                const oldProfile = socialProfiles.find(profile => profile.social_network_name === leftPart);
+
+                const profileName = body[`${leftPart}_profile`] || oldProfile.social_network_profile;
+                const profileFollowers = body[`${leftPart}_followers`] || oldProfile.social_network_followers;
 
                 if (!profileName || !profileFollowers) {
                     throw new ErrorHandler(errorCodes.BAD_REQUEST, errorMessages.BAD_SOCIAL_PROFILE.customCode,
-                        `You must send both ${leftPart}_profile and ${leftPart}_followers`);
+                        'No profile data');
                 }
 
                 const newProfile = {
