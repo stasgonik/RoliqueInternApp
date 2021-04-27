@@ -37,9 +37,10 @@ const influencerScheme = new Schema({
     toJSON: { virtuals: true }
 });
 
-influencerScheme.virtual('full_name').get(function() {
-    return `${this.first_name} ${this.last_name}`;
-});
+influencerScheme.virtual('full_name')
+    .get(function() {
+        return `${this.first_name} ${this.last_name}`;
+    });
 
 influencerScheme.post('save', function(doc) {
     const newUsername = getUsername(doc);

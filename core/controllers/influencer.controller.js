@@ -1,6 +1,7 @@
 const {
     influencerService,
-    fileService
+    fileService,
+    instagramService
 } = require('../services');
 const {
     ErrorHandler,
@@ -30,6 +31,11 @@ module.exports = {
             }
 
             const influencer = await influencerService.getInfluencerById(id);
+
+            if (influencer.user_name !== '—') {
+                influencer.instagram_photos = await instagramService.getInstagramPhotos(influencer.user_name);
+            }
+
             res.json(influencer);
         } catch (e) {
             next(e);
@@ -43,7 +49,10 @@ module.exports = {
 
             if (avatar) {
                 const { url } = await fileService.uploadFile(avatar);
-                req.body = { ...req.body, profile_picture: url };
+                req.body = {
+                    ...req.body,
+                    profile_picture: url
+                };
             }
 
             await influencerService.createInfluencer(req.body);
