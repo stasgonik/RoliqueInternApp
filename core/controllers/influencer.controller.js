@@ -9,6 +9,7 @@ const {
     errorMessages: { INFLUENCER_NOT_FOUND },
     successMessages
 } = require('../error');
+const { magicString: { SOCIAL_NETWORKS } } = require('../constants');
 
 module.exports = {
     getAllInfluencers: async (req, res, next) => {
@@ -32,7 +33,10 @@ module.exports = {
 
             const influencer = await influencerService.getInfluencerById(id);
 
-            if (influencer.user_name !== '—') {
+            const instagramProfile = influencer.social_profiles
+                .find(profile => profile.social_network_name === SOCIAL_NETWORKS.INSTAGRAM);
+
+            if (instagramProfile) {
                 influencer.instagram_photos = await instagramService.getInstagramPhotos(influencer.user_name);
             }
 
