@@ -4,4 +4,5 @@ module.exports = {
     userService: require('./user.service'),
     fileService: require('./file-upload.service'),
     influencerService: require('./influencer.service'),
+    instagramService: require('./instagram.service'),
 };
