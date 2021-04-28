@@ -31,13 +31,17 @@ module.exports = {
                 throw new ErrorHandler(errorCodes.BAD_REQUEST, INFLUENCER_NOT_FOUND.customCode, INFLUENCER_NOT_FOUND.message);
             }
 
-            const influencer = await influencerService.getInfluencerById(id);
+            let influencer = await influencerService.getInfluencerById(id);
 
             const instagramProfile = influencer.social_profiles
                 .find(profile => profile.social_network_name === SOCIAL_NETWORKS.INSTAGRAM);
 
             if (instagramProfile) {
-                influencer.instagram_photos = await instagramService.getInstagramPhotos(influencer.user_name);
+                const photos = await instagramService.experiment(influencer.user_name);
+                influencer = {
+                    ...influencer._doc,
+                    instagram_photos: photos
+                };
             }
 
             res.json(influencer);

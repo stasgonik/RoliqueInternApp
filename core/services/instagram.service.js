@@ -1,19 +1,31 @@
-const fetch = require('node-fetch');
+const { IgApiClient } = require('instagram-private-api');
+
+const {
+    config: {
+        INSTAGRAM,
+        INSTAGRAM_PASS
+    }
+} = require('../config');
 
 module.exports = {
-    getInstagramPhotos: async (userName) => {
-        const url = `https://www.instagram.com/${userName}/?__a=1`;
-
-        const settings = { method: 'Get' };
-
-        const { graphql: { user: { edge_owner_to_timeline_media: { edges } } } } = await fetch(url, settings)
-            .then(res => res.json());
-
+    experiment: async (username) => {
+        const ig = new IgApiClient();
+        ig.state.generateDevice(INSTAGRAM_PASS);
+        await ig.account.login(INSTAGRAM, INSTAGRAM_PASS);
+        // console.log(JSON.stringify(auth));
+        const targetUser = await ig.user.searchExact(username);
+        const reelsFeed = await ig.feed.user(
+            targetUser.pk
+        );
+        // console.log(reelsFeed);
+        const one = await reelsFeed.items();
+        let i = 0;
         const photos = [];
-        for (const object of edges) {
-            const path = object.node.thumbnail_resources;
-            const photo = path[path.length - 1].src;
-            photos.unshift(photo);
+        for (const post of one) {
+            if (i < 12) {
+                i++;
+                photos.unshift(post.image_versions2.candidates[0].url);
+            }
         }
 
         return photos;

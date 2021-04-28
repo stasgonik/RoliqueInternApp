@@ -14,4 +14,7 @@ module.exports = {
     CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY || 'cloudinaryApiKey',
     CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET || 'cloudinarySecret',
     CLOUDINARY_URL: process.env.CLOUDINARY_URL || 'url',
+
+    INSTAGRAM: process.env.INSTAGRAM,
+    INSTAGRAM_PASS: process.env.INSTAGRAM_PASS,
 };
