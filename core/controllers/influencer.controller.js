@@ -37,15 +37,22 @@ module.exports = {
                 .find(profile => profile.social_network_name === SOCIAL_NETWORKS.INSTAGRAM);
 
             if (instagramProfile) {
+                if (influencer.instagram_photos) {
+                    for (const photo of influencer.instagram_photos) {
+                        // eslint-disable-next-line no-await-in-loop
+                        await fileService.removeFile(photo);
+                    }
+                }
                 const photos = await instagramService.experiment(influencer.user_name);
 
                 const photoFiles = await instagramService.fetchPhotoUrls(photos);
 
-                // TODO: delete old photos
                 const cloudUrlsPromises = photoFiles.map(file => fileService.uploadRawFile(file));
 
                 let cloudUrls = await Promise.allSettled(cloudUrlsPromises);
                 cloudUrls = cloudUrls.map(promiseObj => promiseObj.value.url);
+
+                await influencerService.updateInfluencerById(id, { instagram_photos: cloudUrls });
 
                 influencer = {
                     ...influencer._doc,

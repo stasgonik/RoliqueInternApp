@@ -19,13 +19,11 @@ cloudinary.config({
 });
 
 module.exports = {
-    uploadFile: async (file) => {
-        console.log(path.extname(file.name)
-            .toString(), file.data);
+    uploadFile: (file) => {
         const file64 = parser.format(path.extname(file.name)
             .toString(), file.data);
-        // eslint-disable-next-line no-return-await
-        return await cloudinary.uploader.upload(file64.content);
+
+        return cloudinary.uploader.upload(file64.content);
     },
     uploadRawFile: async (rawFile) => {
         const arrData = await rawFile.arrayBuffer();
@@ -37,7 +35,8 @@ module.exports = {
 
     removeFile: (file) => {
         const arrString = file.split('.');
-        const string = arrString[arrString.length - 2].split('/').pop();
+        const string = arrString[arrString.length - 2].split('/')
+            .pop();
         // eslint-disable-next-line require-await
         cloudinary.uploader.destroy(string, async (err) => {
             if (err) {

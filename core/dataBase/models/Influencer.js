@@ -31,7 +31,8 @@ const influencerScheme = new Schema({
         type: String,
         default: '—'
     },
-    profile_picture: String, // relative path in the static folder
+    profile_picture: String,
+    instagram_photos: [String]
 }, {
     toObject: { virtuals: true },
     toJSON: { virtuals: true }
