@@ -38,9 +38,18 @@ module.exports = {
 
             if (instagramProfile) {
                 const photos = await instagramService.experiment(influencer.user_name);
+
+                const photoFiles = await instagramService.fetchPhotoUrls(photos);
+
+                // TODO: delete old photos
+                const cloudUrlsPromises = photoFiles.map(file => fileService.uploadRawFile(file));
+
+                let cloudUrls = await Promise.allSettled(cloudUrlsPromises);
+                cloudUrls = cloudUrls.map(promiseObj => promiseObj.value.url);
+
                 influencer = {
                     ...influencer._doc,
-                    instagram_photos: photos
+                    instagram_photos: cloudUrls
                 };
             }
 

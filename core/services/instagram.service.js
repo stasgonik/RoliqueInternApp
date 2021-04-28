@@ -1,4 +1,5 @@
 const { IgApiClient } = require('instagram-private-api');
+const fetch = require('node-fetch');
 
 const {
     config: {
@@ -29,5 +30,21 @@ module.exports = {
         }
 
         return photos;
+    },
+    fetchPhotoUrls: async (photoUrls) => {
+        const allPromises = [];
+
+        for (const photoUrl of photoUrls) {
+            const newPhotoPromise = fetch(photoUrl).then(res => res.blob());
+            allPromises.push(newPhotoPromise);
+        }
+
+        const promisesResults = await Promise.allSettled(allPromises);
+        // eslint-disable-next-line array-callback-return
+        return promisesResults.map(promiseObj => {
+            if (promiseObj.status === 'fulfilled') {
+                return promiseObj.value;
+            }
+        });
     }
 };
