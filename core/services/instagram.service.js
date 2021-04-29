@@ -22,10 +22,14 @@ module.exports = {
         for (const post of one) {
             if (photos.length < 12) {
                 if (post.image_versions2) {
-                    photos.unshift(post.image_versions2.candidates[0].url);
+                    photos.push(post.image_versions2.candidates[0].url);
                 }
                 if (post.carousel_media && photos.length < 12) {
-                    photos.unshift(post.carousel_media[0].image_versions2.candidates[0].url);
+                    for (const test of post.carousel_media) {
+                        if (photos.length < 12) {
+                            photos.push(test.image_versions2.candidates[0].url);
+                        }
+                    }
                 }
             }
         }
