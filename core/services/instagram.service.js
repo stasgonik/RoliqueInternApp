@@ -18,18 +18,18 @@ module.exports = {
         const reelsFeed = await ig.feed.user(
             targetUser.pk
         );
-        const one = await reelsFeed.items();
+        const page = await reelsFeed.items();
 
-        for (const post of one) {
+        for (const post of page) {
             if (photos.length < 12) {
                 if (post.image_versions2) {
                     photos.push(post.image_versions2.candidates[0].url);
                 }
 
                 if (post.carousel_media && photos.length < 12) {
-                    for (const test of post.carousel_media) {
+                    for (const photo of post.carousel_media) {
                         if (photos.length < 12) {
-                            photos.push(test.image_versions2.candidates[0].url);
+                            photos.push(photo.image_versions2.candidates[0].url);
                         }
                     }
                 }
