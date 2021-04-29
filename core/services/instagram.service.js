@@ -11,21 +11,22 @@ const {
 module.exports = {
     experiment: async (username) => {
         const ig = new IgApiClient();
-        ig.state.generateDevice(INSTAGRAM_PASS);
+        ig.state.generateDevice(INSTAGRAM);
         await ig.account.login(INSTAGRAM, INSTAGRAM_PASS);
-        // console.log(JSON.stringify(auth));
         const targetUser = await ig.user.searchExact(username);
         const reelsFeed = await ig.feed.user(
             targetUser.pk
         );
-        // console.log(reelsFeed);
         const one = await reelsFeed.items();
-        let i = 0;
         const photos = [];
         for (const post of one) {
-            if (i < 12) {
-                i++;
-                photos.unshift(post.image_versions2.candidates[0].url);
+            if (photos.length < 12) {
+                if (post.image_versions2) {
+                    photos.unshift(post.image_versions2.candidates[0].url);
+                }
+                if (post.carousel_media && photos.length < 12) {
+                    photos.unshift(post.carousel_media[0].image_versions2.candidates[0].url);
+                }
             }
         }
 
