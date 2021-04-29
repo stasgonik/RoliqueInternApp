@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 const { IG } = require('../helper');
 
 module.exports = {
-    getPhotos: async (username) => {
+    getPhotosUrls: async (username) => {
         const ig = await IG.getInstance();
 
         const targetUser = await ig.user.searchExact(username);

@@ -38,12 +38,14 @@ module.exports = {
 
             if (instagramProfile) {
                 if (influencer.instagram_photos) {
-                    for (const photo of influencer.instagram_photos) {
-                        // eslint-disable-next-line no-await-in-loop
-                        await fileService.removeFile(photo);
-                    }
+                    // for (const photo of influencer.instagram_photos) {
+                    //     // eslint-disable-next-line no-await-in-loop
+                    //     await fileService.removeFile(photo);
+                    // }
+                    const removeFilesPromises = influencer.instagram_photos.map(photo => fileService.removeFile(photo));
+                    await Promise.allSettled(removeFilesPromises);
                 }
-                const photos = await instagramService.getPhotos(influencer.user_name);
+                const photos = await instagramService.getPhotosUrls(influencer.user_name);
 
                 const photoFiles = await instagramService.fetchPhotoUrls(photos);
 
