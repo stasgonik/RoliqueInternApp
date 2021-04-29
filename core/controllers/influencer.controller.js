@@ -24,6 +24,8 @@ module.exports = {
     getInfluencerById: async (req, res, next) => {
         try {
             const { id } = req.params;
+            let { showPhotos } = req.query;
+            showPhotos = showPhotos !== 'false';
 
             const isInfluencerExist = await influencerService.doesInfluencerExist({ _id: id });
 
@@ -36,28 +38,32 @@ module.exports = {
             const instagramProfile = influencer.social_profiles
                 .find(profile => profile.social_network_name === SOCIAL_NETWORKS.INSTAGRAM);
 
-            if (instagramProfile) {
+            if (showPhotos && instagramProfile) {
                 if (influencer.instagram_photos) {
-                    for (const photo of influencer.instagram_photos) {
-                        // eslint-disable-next-line no-await-in-loop
-                        await fileService.removeFile(photo);
-                    }
+                    // for (const photo of influencer.instagram_photos) {
+                    //     // eslint-disable-next-line no-await-in-loop
+                    //     await fileService.removeFile(photo);
+                    // }
+                    const removeFilesPromises = influencer.instagram_photos.map(photo => fileService.removeFile(photo));
+                    await Promise.allSettled(removeFilesPromises);
                 }
-                const photos = await instagramService.getPhotos(influencer.user_name);
+                const photos = await instagramService.getPhotosUrls(influencer.user_name);
 
-                const photoFiles = await instagramService.fetchPhotoUrls(photos);
+                if (photos.length) {
+                    const photoFiles = await instagramService.fetchPhotoUrls(photos);
 
-                const cloudUrlsPromises = photoFiles.map(file => fileService.uploadRawFile(file));
+                    const cloudUrlsPromises = photoFiles.map(file => fileService.uploadRawFile(file));
 
-                let cloudUrls = await Promise.allSettled(cloudUrlsPromises);
-                cloudUrls = cloudUrls.map(promiseObj => promiseObj.value.url);
+                    let cloudUrls = await Promise.allSettled(cloudUrlsPromises);
+                    cloudUrls = cloudUrls.map(promiseObj => promiseObj.value.url);
 
-                await influencerService.updateInfluencerById(id, { instagram_photos: cloudUrls });
+                    await influencerService.updateInfluencerById(id, { instagram_photos: cloudUrls });
 
-                influencer = {
-                    ...influencer._doc,
-                    instagram_photos: cloudUrls
-                };
+                    influencer = {
+                        ...influencer._doc,
+                        instagram_photos: cloudUrls
+                    };
+                }
             }
 
             res.json(influencer);
