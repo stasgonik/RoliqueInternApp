@@ -4,4 +4,5 @@ module.exports = {
     passwordHasher: require('./password-hasher'),
     rolesMatcher: require('./rolesMatcher'),
     queryBuilder: require('./queryBuilder'),
+    IG: require('./instagram-private-api')
 };

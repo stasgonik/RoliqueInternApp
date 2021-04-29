@@ -2,6 +2,8 @@ const cloudinary = require('cloudinary').v2;
 const path = require('path');
 const DatauriParser = require('datauri/parser');
 
+const { fileConstants: { MIMETYPE_TO_EXTENSION_MATCHER } } = require('../constants');
+
 const parser = new DatauriParser();
 
 const {
@@ -25,11 +27,17 @@ module.exports = {
 
         return cloudinary.uploader.upload(file64.content);
     },
+
     uploadRawFile: async (rawFile) => {
         const arrData = await rawFile.arrayBuffer();
         const buffer = Buffer.from(arrData);
+        const mimetype = rawFile.type;
 
-        const file64 = parser.format('.jpg', buffer);
+        if (!MIMETYPE_TO_EXTENSION_MATCHER[mimetype]) {
+            return console.log(`Got unknown photo mimetype: ${mimetype}`);
+        }
+
+        const file64 = parser.format(MIMETYPE_TO_EXTENSION_MATCHER[mimetype], buffer);
         return cloudinary.uploader.upload(file64.content);
     },
 
