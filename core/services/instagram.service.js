@@ -1,29 +1,25 @@
-const { IgApiClient } = require('instagram-private-api');
 const fetch = require('node-fetch');
 
-const {
-    config: {
-        INSTAGRAM,
-        INSTAGRAM_PASS
-    }
-} = require('../config');
+const { IG } = require('../helper');
 
 module.exports = {
-    experiment: async (username) => {
-        const ig = new IgApiClient();
-        ig.state.generateDevice(INSTAGRAM);
-        await ig.account.login(INSTAGRAM, INSTAGRAM_PASS);
+    getPhotos: async (username) => {
+        const ig = await IG.getInstance();
+
         const targetUser = await ig.user.searchExact(username);
         const reelsFeed = await ig.feed.user(
             targetUser.pk
         );
+
         const one = await reelsFeed.items();
         const photos = [];
+
         for (const post of one) {
             if (photos.length < 12) {
                 if (post.image_versions2) {
                     photos.push(post.image_versions2.candidates[0].url);
                 }
+
                 if (post.carousel_media && photos.length < 12) {
                     for (const test of post.carousel_media) {
                         if (photos.length < 12) {
@@ -36,6 +32,7 @@ module.exports = {
 
         return photos;
     },
+
     fetchPhotoUrls: async (photoUrls) => {
         const allPromises = [];
 

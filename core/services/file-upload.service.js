@@ -34,7 +34,7 @@ module.exports = {
         const mimetype = rawFile.type;
 
         if (!MIMETYPE_TO_EXTENSION_MATCHER[mimetype]) {
-            return console.log('Got unknown photo mimetype');
+            return console.log(`Got unknown photo mimetype: ${mimetype}`);
         }
 
         const file64 = parser.format(MIMETYPE_TO_EXTENSION_MATCHER[mimetype], buffer);

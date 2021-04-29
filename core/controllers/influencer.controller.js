@@ -43,7 +43,7 @@ module.exports = {
                         await fileService.removeFile(photo);
                     }
                 }
-                const photos = await instagramService.experiment(influencer.user_name);
+                const photos = await instagramService.getPhotos(influencer.user_name);
 
                 const photoFiles = await instagramService.fetchPhotoUrls(photos);
 
