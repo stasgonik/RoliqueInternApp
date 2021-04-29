@@ -5,14 +5,17 @@ const { IG } = require('../helper');
 module.exports = {
     getPhotos: async (username) => {
         const ig = await IG.getInstance();
-
+        const photos = [];
         const targetUser = await ig.user.searchExact(username);
         const reelsFeed = await ig.feed.user(
             targetUser.pk
         );
-
-        const one = await reelsFeed.items();
-        const photos = [];
+        let one = [];
+        try {
+            one = await reelsFeed.items();
+        } catch (e) {
+            return photos;
+        }
 
         for (const post of one) {
             if (photos.length < 12) {
