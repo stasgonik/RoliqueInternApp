@@ -6,16 +6,19 @@ module.exports = {
     getPhotosUrls: async (username) => {
         const ig = await IG.getInstance();
         const photos = [];
-        const targetUser = await ig.user.searchExact(username);
-        const reelsFeed = await ig.feed.user(
-            targetUser.pk
-        );
-        let one = [];
+        let targetUser = {};
         try {
-            one = await reelsFeed.items();
+            targetUser = await ig.user.searchExact(username);
         } catch (e) {
             return photos;
         }
+        if (targetUser && targetUser.is_private) {
+            return photos;
+        }
+        const reelsFeed = await ig.feed.user(
+            targetUser.pk
+        );
+        const one = await reelsFeed.items();
 
         for (const post of one) {
             if (photos.length < 12) {
