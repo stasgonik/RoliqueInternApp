@@ -7,4 +7,10 @@ module.exports = {
         'image/tiff',
         'image/webp'
     ],
+    MIMETYPE_TO_EXTENSION_MATCHER: {
+        'image/jpeg': '.jpg',
+        'image/png': '.png',
+        'image/bmp': '.bmp',
+        'image/gif': '.gif'
+    }
 };
