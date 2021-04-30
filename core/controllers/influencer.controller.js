@@ -40,22 +40,18 @@ module.exports = {
 
             if (showPhotos && instagramProfile) {
                 if (influencer.instagram_photos) {
-                    // for (const photo of influencer.instagram_photos) {
-                    //     // eslint-disable-next-line no-await-in-loop
-                    //     await fileService.removeFile(photo);
-                    // }
                     const removeFilesPromises = influencer.instagram_photos.map(photo => fileService.removeFile(photo));
                     await Promise.allSettled(removeFilesPromises);
                 }
-                const photos = await instagramService.getPhotosUrls(influencer.user_name);
 
+                const photos = await instagramService.getPhotosUrls(influencer.user_name);
                 if (photos.length) {
                     const photoFiles = await instagramService.fetchPhotoUrls(photos);
 
-                    const cloudUrlsPromises = photoFiles.map(file => fileService.uploadRawFile(file));
+                    let cloudUrlsPromises = photoFiles.map(file => fileService.uploadRawFile(file));
+                    cloudUrlsPromises = await Promise.allSettled(cloudUrlsPromises);
 
-                    let cloudUrls = await Promise.allSettled(cloudUrlsPromises);
-                    cloudUrls = cloudUrls.map(promiseObj => promiseObj.value.url);
+                    const cloudUrls = cloudUrlsPromises.map(promiseObj => promiseObj.value.url);
 
                     await influencerService.updateInfluencerById(id, { instagram_photos: cloudUrls });
 
