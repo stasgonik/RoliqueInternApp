@@ -2,7 +2,8 @@
   "name": "RoliqueInternApp",
   "version": "1.0.0",
   "scripts": {
-    "start": "nodemon core/app.js && cd node_modules/.bin && migrate up createAdmin -d mongodb://localhost/migrations"
+    "start": "nodemon core/app.js && cd node_modules/.bin && migrate up createAdmin -d mongodb://localhost/migrations",
+    "test": "node core/app.js"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",

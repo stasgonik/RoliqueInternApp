@@ -91,11 +91,19 @@ module.exports = {
     updateInfluencer: async (req, res, next) => {
         try {
             const {
-                body,
-                id
+                id,
+                avatar
             } = req;
 
-            await influencerService.updateInfluencerById(id, body);
+            if (avatar) {
+                const { url } = await fileService.uploadFile(avatar);
+                req.body = {
+                    ...req.body,
+                    profile_picture: url
+                };
+            }
+
+            await influencerService.updateInfluencerById(id, req.body);
 
             const newInfluencer = await influencerService.getSingleInfluencer({ _id: id });
 
