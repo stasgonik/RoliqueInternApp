@@ -25,40 +25,13 @@ module.exports = {
         try {
             const { id } = req.params;
 
-            const isInfluencerExist = await influencerService.doesInfluencerExist({ _id: id });
+            const doesInfluencerExist = await influencerService.doesInfluencerExist({ _id: id });
 
-            if (!isInfluencerExist) {
+            if (!doesInfluencerExist) {
                 throw new ErrorHandler(errorCodes.BAD_REQUEST, INFLUENCER_NOT_FOUND.customCode, INFLUENCER_NOT_FOUND.message);
             }
 
-            let influencer = await influencerService.getInfluencerById(id);
-
-            const instagramProfile = influencer.social_profiles
-                .find(profile => profile.social_network_name === SOCIAL_NETWORKS.INSTAGRAM);
-
-            if (instagramProfile) {
-                if (influencer.instagram_photos) {
-                    for (const photo of influencer.instagram_photos) {
-                        // eslint-disable-next-line no-await-in-loop
-                        await fileService.removeFile(photo);
-                    }
-                }
-                const photos = await instagramService.experiment(influencer.user_name);
-
-                const photoFiles = await instagramService.fetchPhotoUrls(photos);
-
-                const cloudUrlsPromises = photoFiles.map(file => fileService.uploadRawFile(file));
-
-                let cloudUrls = await Promise.allSettled(cloudUrlsPromises);
-                cloudUrls = cloudUrls.map(promiseObj => promiseObj.value.url);
-
-                await influencerService.updateInfluencerById(id, { instagram_photos: cloudUrls });
-
-                influencer = {
-                    ...influencer._doc,
-                    instagram_photos: cloudUrls
-                };
-            }
+            const influencer = await influencerService.getInfluencerById(id);
 
             res.json(influencer);
         } catch (e) {
@@ -68,7 +41,8 @@ module.exports = {
     createInfluencer: async (req, res, next) => {
         try {
             const {
-                avatar
+                avatar,
+                body: { social_profiles }
             } = req;
 
             if (avatar) {
@@ -77,6 +51,21 @@ module.exports = {
                     ...req.body,
                     profile_picture: url
                 };
+            }
+
+            const instagramProfile = social_profiles.find(profile => profile.social_network_name === SOCIAL_NETWORKS.INSTAGRAM);
+            if (instagramProfile) {
+                const photos = await instagramService.getPhotosUrls(instagramProfile.social_network_profile);
+                if (photos.length) {
+                    const photoFiles = await instagramService.fetchPhotoUrls(photos);
+
+                    let cloudUrlsPromises = photoFiles.map(file => fileService.uploadRawFile(file));
+                    cloudUrlsPromises = await Promise.allSettled(cloudUrlsPromises);
+
+                    const cloudUrls = cloudUrlsPromises.map(promiseObj => promiseObj.value.url);
+
+                    req.body.instagram_photos = cloudUrls;
+                }
             }
 
             await influencerService.createInfluencer(req.body);
@@ -89,11 +78,44 @@ module.exports = {
     updateInfluencer: async (req, res, next) => {
         try {
             const {
-                body,
-                id
+                id,
+                avatar,
+                body: { social_profiles }
             } = req;
 
-            await influencerService.updateInfluencerById(id, body);
+            if (avatar) {
+                const { url } = await fileService.uploadFile(avatar);
+                req.body = {
+                    ...req.body,
+                    profile_picture: url
+                };
+            }
+
+            const oldInfluencer = await influencerService.getSingleInfluencer({ _id: id });
+            const instagramProfile = social_profiles.find(profile => profile.social_network_name === SOCIAL_NETWORKS.INSTAGRAM);
+
+            if (instagramProfile) {
+                if (oldInfluencer.instagram_photos) {
+                    const removeFilesPromises = oldInfluencer.instagram_photos.map(photo => fileService.removeFile(photo));
+                    await Promise.allSettled(removeFilesPromises);
+                }
+
+                const photos = await instagramService.getPhotosUrls(instagramProfile.social_network_profile);
+                if (photos.length) {
+                    const photoFiles = await instagramService.fetchPhotoUrls(photos);
+
+                    let cloudUrlsPromises = photoFiles.map(file => fileService.uploadRawFile(file));
+                    cloudUrlsPromises = await Promise.allSettled(cloudUrlsPromises);
+
+                    const cloudUrls = cloudUrlsPromises.map(promiseObj => promiseObj.value.url);
+
+                    req.body.instagram_photos = cloudUrls;
+                } else {
+                    req.body.instagram_photos = [];
+                }
+            }
+
+            await influencerService.updateInfluencerById(id, req.body);
 
             const newInfluencer = await influencerService.getSingleInfluencer({ _id: id });
 

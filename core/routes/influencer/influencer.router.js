@@ -30,6 +30,8 @@ router.put('/:id',
     authMiddleware.checkAccessToken,
     influencerMiddleware.updateSocialProfiles,
     influencerMiddleware.checkIsUpdateInfluencer,
+    fileMiddleware.checkFiles,
+    fileMiddleware.checkAvatar,
     influencerController.updateInfluencer);
 
 module.exports = router;

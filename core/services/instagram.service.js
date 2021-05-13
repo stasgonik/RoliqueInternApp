@@ -1,36 +1,44 @@
-const { IgApiClient } = require('instagram-private-api');
 const fetch = require('node-fetch');
 
-const {
-    config: {
-        INSTAGRAM,
-        INSTAGRAM_PASS
-    }
-} = require('../config');
+const { IG } = require('../helper');
 
 module.exports = {
-    experiment: async (username) => {
-        const ig = new IgApiClient();
-        ig.state.generateDevice(INSTAGRAM_PASS);
-        await ig.account.login(INSTAGRAM, INSTAGRAM_PASS);
-        // console.log(JSON.stringify(auth));
-        const targetUser = await ig.user.searchExact(username);
+    getPhotosUrls: async (username) => {
+        const ig = await IG.getInstance();
+        const photos = [];
+        let targetUser = {};
+        try {
+            targetUser = await ig.user.searchExact(username);
+        } catch (e) {
+            return photos;
+        }
+        if (targetUser && targetUser.is_private) {
+            return photos;
+        }
         const reelsFeed = await ig.feed.user(
             targetUser.pk
         );
-        // console.log(reelsFeed);
-        const one = await reelsFeed.items();
-        let i = 0;
-        const photos = [];
-        for (const post of one) {
-            if (i < 12) {
-                i++;
-                photos.unshift(post.image_versions2.candidates[0].url);
+        const page = await reelsFeed.items();
+
+        for (const post of page) {
+            if (photos.length < 12) {
+                if (post.image_versions2) {
+                    photos.push(post.image_versions2.candidates[0].url);
+                }
+
+                if (post.carousel_media && photos.length < 12) {
+                    for (const photo of post.carousel_media) {
+                        if (photos.length < 12) {
+                            photos.push(photo.image_versions2.candidates[0].url);
+                        }
+                    }
+                }
             }
         }
 
         return photos;
     },
+
     fetchPhotoUrls: async (photoUrls) => {
         const allPromises = [];
 
