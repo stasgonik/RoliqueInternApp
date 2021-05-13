@@ -59,6 +59,8 @@ module.exports = {
                         ...influencer._doc,
                         instagram_photos: cloudUrls
                     };
+                } else {
+                    await influencerService.updateInfluencerById(id, { instagram_photos: [] });
                 }
             }
 
