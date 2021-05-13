@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const { User } = require('../fhnkjdfh/models');
+const { User } = require('../dataBase/models');
 const { publicFields: { User: publicFields } } = require('../config');
 
 module.exports = {

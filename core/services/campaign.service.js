@@ -1,4 +1,4 @@
-const { models: { Campaign } } = require('../database');
+const { models: { Campaign } } = require('../dataBase');
 //
 // module.exports = {
 //     createCampaign: (object) => Campaign.create(object),
