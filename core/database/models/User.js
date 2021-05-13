@@ -31,14 +31,16 @@ const userScheme = new Schema({
         required: true,
     },
     forgot_token: String,
-    profile_picture: String, // relative path in the static folder
+    profile_picture: String,
+  // relative path in the static folder
 }, {
     toObject: { virtuals: true },
     toJSON: { virtuals: true }
 });
 
-userScheme.virtual('full_name').get(function() {
-    return `${this.first_name} ${this.last_name}`;
-});
+userScheme.virtual('full_name')
+    .get(function() {
+        return `${this.first_name} ${this.last_name}`;
+    });
 
 module.exports = model(DATA_BASE_TABLE.USER, userScheme);
