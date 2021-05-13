@@ -1,4 +1,4 @@
-const { OAuth } = require('../database/models');
+const { OAuth } = require('../fhnkjdfh/models');
 
 module.exports = {
     getTokenByParams: (params, model) => OAuth.findOne(params).populate(model),

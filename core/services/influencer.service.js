@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const { Influencer } = require('../database/models');
+const { Influencer } = require('../fhnkjdfh/models');
 const { queryBuilder } = require('../helper');
 
 module.exports = {
