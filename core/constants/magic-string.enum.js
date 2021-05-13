@@ -10,7 +10,6 @@ module.exports = {
         ADMIN: 'admin',
         MANAGER: 'manager',
         EMPLOYEE: 'employee',
-        IDIOT: 'idiot'
     },
     SOCIAL_NETWORKS: {
         INSTAGRAM: 'instagram',
