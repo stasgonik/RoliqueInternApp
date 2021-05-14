@@ -92,7 +92,10 @@ module.exports = {
             }
 
             const oldInfluencer = await influencerService.getSingleInfluencer({ _id: id });
-            const instagramProfile = social_profiles.find(profile => profile.social_network_name === SOCIAL_NETWORKS.INSTAGRAM);
+            let instagramProfile;
+            if (social_profiles) {
+                instagramProfile = social_profiles.find(profile => profile.social_network_name === SOCIAL_NETWORKS.INSTAGRAM);
+            }
 
             if (instagramProfile) {
                 if (oldInfluencer.instagram_photos) {
