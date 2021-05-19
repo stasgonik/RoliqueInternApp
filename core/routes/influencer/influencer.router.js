@@ -30,6 +30,7 @@ router.put('/:id',
     authMiddleware.checkAccessToken,
     influencerMiddleware.updateSocialProfiles,
     influencerMiddleware.checkIsUpdateInfluencer,
+    influencerMiddleware.areSocialProfilesValid,
     fileMiddleware.checkFiles,
     fileMiddleware.checkAvatar,
     influencerController.updateInfluencer);

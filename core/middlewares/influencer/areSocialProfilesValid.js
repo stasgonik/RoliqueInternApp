@@ -7,8 +7,8 @@ const { influencerService } = require('../../services');
 
 module.exports = async (req, res, next) => {
     try {
-        const { social_profiles } = req.body;
-        if (!social_profiles.length) {
+        const { id, body: { social_profiles } } = req;
+        if (!(social_profiles && social_profiles.length)) {
             return next();
         }
 
@@ -17,7 +17,7 @@ module.exports = async (req, res, next) => {
             'social_profiles.social_network_profile': socialProfile.social_network_profile
         }));
 
-        const influencers = await influencerService.getAllInfluencers({ $or: newProfiles },
+        const influencers = await influencerService.getAllInfluencers({ $or: newProfiles, _id: { $ne: id } },
             { social_profiles: 1 });
 
         const influencerProfiles = influencers && influencers.map(item => item.social_profiles);

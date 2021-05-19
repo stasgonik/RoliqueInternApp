@@ -5,4 +5,5 @@ module.exports = {
     doesInfluencerExist: require('./doesInfluencerExist'),
     formSocialProfiles: require('./formSocialProfiles'),
     updateSocialProfiles: require('./updateSocialProfiles'),
+    areSocialProfilesValid: require('./areSocialProfilesValid')
 };
