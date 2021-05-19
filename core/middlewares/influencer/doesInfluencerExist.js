@@ -12,15 +12,30 @@ module.exports = async (req, res, next) => {
             return next();
         }
 
-        const searchArr = social_profiles.map(socialProfile => ({
+        const newProfiles = social_profiles.map(socialProfile => ({
             'social_profiles.social_network_name': socialProfile.social_network_name,
             'social_profiles.social_network_profile': socialProfile.social_network_profile
         }));
 
-        const influencerExists = await influencerService.doesInfluencerExist({ $or: searchArr });
-        if (influencerExists) {
+        const influencer = await influencerService.getSingleInfluencer({ $or: newProfiles },
+            { social_profiles: 1 });
+        const influencerProfiles = influencer && influencer.social_profiles;
+
+        if (influencerProfiles) {
+            const duplicateProfiles = [];
+
+            for (const profile of newProfiles) {
+                const newProfileName = profile['social_profiles.social_network_profile'];
+                const duplicateProfile = influencerProfiles.find(item => item.social_network_profile === newProfileName);
+
+                if (duplicateProfile) {
+                    duplicateProfiles.push(duplicateProfile.social_network_name);
+                }
+            }
+
             throw new ErrorHandler(errorCodes.BAD_REQUEST,
-                errorMessages.INFLUENCER_ALREADY_EXISTS.customCode, errorMessages.INFLUENCER_ALREADY_EXISTS.message);
+                errorMessages.INFLUENCER_ALREADY_EXISTS.customCode, errorMessages.INFLUENCER_ALREADY_EXISTS.message,
+                duplicateProfiles);
         }
 
         next();

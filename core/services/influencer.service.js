@@ -12,7 +12,7 @@ module.exports = {
 
     getInfluencerById: (id) => Influencer.findById(id),
 
-    getSingleInfluencer: (query) => Influencer.findOne(query),
+    getSingleInfluencer: (query, projection = {}) => Influencer.findOne(query, projection),
 
     createInfluencer: (user) => Influencer.create(user),
 

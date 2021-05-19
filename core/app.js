@@ -68,7 +68,8 @@ app.use('*', (err, req, res, next) => {
         .status(err.status || 500)
         .json({
             customCode: err.customCode || 0,
-            message: err.message || ''
+            message: err.message || '',
+            payload: err.payload || {}
         });
 });
 

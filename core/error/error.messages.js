@@ -32,7 +32,7 @@ module.exports = {
     },
     INFLUENCER_ALREADY_EXISTS: {
         customCode: 4008,
-        message: 'Influencer with the same social profile already exists',
+        message: 'Influencer with the same social profile(s) already exists',
     },
     BAD_SOCIAL_PROFILE: {
         customCode: 4009
