@@ -37,5 +37,9 @@ module.exports = {
         ID: 'id',
         BIRTHDATE: 'birthdate',
         SEARCH: 'search'
+    },
+    PROFILE_DELETE: {
+        NAME: '',
+        FOLLOWERS: 0
     }
 };

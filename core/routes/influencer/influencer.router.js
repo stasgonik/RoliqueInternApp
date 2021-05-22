@@ -28,7 +28,12 @@ router.post('/',
 router.get('/:id', authMiddleware.checkAccessToken, influencerController.getInfluencerById);
 router.put('/:id',
     authMiddleware.checkAccessToken,
+    userMiddleware.checkRole([
+        ROLES.ADMIN,
+        ROLES.MANAGER
+    ]),
     influencerMiddleware.updateSocialProfiles,
+    influencerMiddleware.normalizeRequestData,
     influencerMiddleware.checkIsUpdateInfluencer,
     influencerMiddleware.areSocialProfilesValid,
     fileMiddleware.checkFiles,

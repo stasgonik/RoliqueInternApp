@@ -1,4 +1,4 @@
-const { magicString: { SOCIAL_NETWORKS } } = require('../../constants');
+const { magicString: { SOCIAL_NETWORKS, PROFILE_DELETE } } = require('../../constants');
 const {
     ErrorHandler,
     errorCodes,
@@ -27,6 +27,10 @@ module.exports = async (req, res, next) => {
             return profile;
         });
 
+        // eslint-disable-next-line max-len
+        // need to add additional condition to determine an empty field, because checkValue may be meaningful data (such as '' or 0)
+        const isFieldEmpty = (field, checkValue) => !field && field !== checkValue;
+
         let wasChange = false;
         for (const requestKey in body) {
             const [leftPart] = requestKey.split('_');
@@ -36,13 +40,25 @@ module.exports = async (req, res, next) => {
 
                 const oldProfile = socialProfiles.find(profile => profile.social_network_name === leftPart);
 
-                const profileName = body[`${leftPart}_profile`] || (oldProfile && oldProfile.social_network_profile);
-                const profileFollowers = body[`${leftPart}_followers`] || (oldProfile && oldProfile.social_network_followers);
+                const bodyProfile = body[`${leftPart}_profile`];
+                const bodyFollowers = body[`${leftPart}_followers`];
 
-                if (!profileName || !profileFollowers) {
+                const profileName = isFieldEmpty(bodyProfile, PROFILE_DELETE.NAME)
+                    ? (oldProfile && oldProfile.social_network_profile)
+                    : bodyProfile;
+
+                const profileFollowers = isFieldEmpty(bodyFollowers, PROFILE_DELETE.FOLLOWERS)
+                    ? (oldProfile && oldProfile.social_network_followers)
+                    : bodyFollowers;
+
+                if (isFieldEmpty(profileName, PROFILE_DELETE.NAME) || isFieldEmpty(profileFollowers, PROFILE_DELETE.FOLLOWERS)) {
                     throw new ErrorHandler(errorCodes.BAD_REQUEST, errorMessages.BAD_SOCIAL_PROFILE.customCode,
                         // eslint-disable-next-line max-len
                         `${leftPart} profile is new for this influencer, so you must send both ${leftPart}_profile and ${leftPart}_followers`);
+                }
+
+                if (leftPart === SOCIAL_NETWORKS.INSTAGRAM) {
+                    req.body.instagramChanged = true;
                 }
 
                 const newProfile = {
@@ -52,7 +68,13 @@ module.exports = async (req, res, next) => {
                 };
                 const profileIndex = socialProfiles.indexOf(oldProfile);
 
-                if (profileIndex === -1) {
+                if (profileName === PROFILE_DELETE.NAME && profileFollowers === PROFILE_DELETE.FOLLOWERS) {
+                    if (profileIndex === -1) { // when user tries to create a new profile with delete-values
+                        throw new ErrorHandler(errorCodes.BAD_REQUEST, errorMessages.BAD_SOCIAL_PROFILE.customCode,
+                            `You cannot create ${leftPart} profile with empty name or zero followers`);
+                    }
+                    socialProfiles.splice(profileIndex, 1);
+                } else if (profileIndex === -1) {
                     socialProfiles.push(newProfile);
                 } else {
                     socialProfiles[profileIndex] = newProfile;

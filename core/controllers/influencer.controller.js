@@ -80,7 +80,7 @@ module.exports = {
             const {
                 id,
                 avatar,
-                body: { social_profiles }
+                body: { social_profiles, instagramChanged }
             } = req;
 
             if (avatar) {
@@ -92,12 +92,14 @@ module.exports = {
             }
 
             const oldInfluencer = await influencerService.getSingleInfluencer({ _id: id });
+
             let instagramProfile;
-            if (social_profiles) {
+            if (instagramChanged && social_profiles) {
                 instagramProfile = social_profiles.find(profile => profile.social_network_name === SOCIAL_NETWORKS.INSTAGRAM);
             }
 
             if (instagramProfile) {
+                console.log('here');
                 if (oldInfluencer.instagram_photos) {
                     const removeFilesPromises = oldInfluencer.instagram_photos.map(photo => fileService.removeFile(photo));
                     await Promise.allSettled(removeFilesPromises);
