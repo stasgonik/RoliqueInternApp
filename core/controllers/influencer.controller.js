@@ -80,7 +80,8 @@ module.exports = {
             const {
                 id,
                 avatar,
-                body: { social_profiles, instagramChanged }
+                body: { social_profiles },
+                instagramChanged
             } = req;
 
             if (avatar) {

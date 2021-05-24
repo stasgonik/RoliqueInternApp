@@ -58,7 +58,7 @@ module.exports = async (req, res, next) => {
                 }
 
                 if (leftPart === SOCIAL_NETWORKS.INSTAGRAM) {
-                    req.body.instagramChanged = true;
+                    req.instagramChanged = true;
                 }
 
                 const newProfile = {
@@ -68,7 +68,7 @@ module.exports = async (req, res, next) => {
                 };
                 const profileIndex = socialProfiles.indexOf(oldProfile);
 
-                if (profileName === PROFILE_DELETE.NAME && profileFollowers === PROFILE_DELETE.FOLLOWERS) {
+                if (profileName === PROFILE_DELETE.NAME && +profileFollowers === PROFILE_DELETE.FOLLOWERS) {
                     if (profileIndex === -1) { // when user tries to create a new profile with delete-values
                         throw new ErrorHandler(errorCodes.BAD_REQUEST, errorMessages.BAD_SOCIAL_PROFILE.customCode,
                             `You cannot create ${leftPart} profile with empty name or zero followers`);
