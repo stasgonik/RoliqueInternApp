@@ -47,7 +47,7 @@ module.exports = async (req, res, next) => {
                     ? (oldProfile && oldProfile.social_network_profile)
                     : bodyProfile;
 
-                const profileFollowers = isFieldEmpty(bodyFollowers, PROFILE_DELETE.FOLLOWERS)
+                const profileFollowers = isFieldEmpty(bodyFollowers, +PROFILE_DELETE.FOLLOWERS)
                     ? (oldProfile && oldProfile.social_network_followers)
                     : bodyFollowers;
 
