@@ -5,6 +5,36 @@ const {
 
 const { DATA_BASE_TABLE } = require('../../constants/magic-string.enum');
 
+const brandScheme = new Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    photoUrl: String
+});
+
+const budgetScheme = new Schema({
+    totalBudget: Number,
+    subBudgets: [{ // for example, Production Budget
+        target: String, // for example, Production
+        amount: Number
+    }],
+    validate: [
+        budgetValidator,
+        'Schema validation error: the sum of all subbudgets does not equal to the total budget'
+    ]
+});
+
+function budgetValidator(budget) {
+    const { subBudgets, totalBudget } = budget;
+    if (!subBudgets) {
+        return true;
+    }
+
+    const totalSum = subBudgets.reduce((accumulator, currentValue) => accumulator + currentValue.amount, 0);
+    return totalSum === totalBudget;
+}
+
 const campaignSchema = new Schema({
     title: {
         type: String,
@@ -18,18 +48,13 @@ const campaignSchema = new Schema({
         type: String,
         required: true
     },
-    // start_date: {
-    //     type: Date,
-    //     required: true
-    // },
-    // end_date: {
-    //     type: Date,
-    //     required: true
-    // },
+    start_date: Date,
+    end_date: Date,
     hashtags: { type: String },
     mentions: { type: Schema.Types.Mixed },
-    brand: [String],
-    // todo add defoult role
+    brand: [brandScheme],
+    budget: budgetScheme,
+    // todo add default role
     role: { type: String },
     // campaign_logo: { type: String },
     client_description: { type: String },
@@ -39,7 +64,7 @@ const campaignSchema = new Schema({
     toObject: { virtuals: true },
     timestamps: true
 });
-//
+
 campaignSchema.virtual('_mentions', {
     ref: DATA_BASE_TABLE.INFLUENCER,
     localField: 'mentions',
