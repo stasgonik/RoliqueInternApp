@@ -4,14 +4,18 @@ const {
 } = require('mongoose');
 
 const { DATA_BASE_TABLE } = require('../../constants/magic-string.enum');
+const {
+    Brand,
+    User
+} = require('.');
 
-const brandScheme = new Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    photoUrl: String
-});
+// const brandScheme = new Schema({
+//     name: {
+//         type: String,
+//         required: true
+//     },
+//     photoUrl: String
+// });
 
 const budgetScheme = new Schema({
     totalBudget: Number,
@@ -26,7 +30,11 @@ const budgetScheme = new Schema({
 });
 
 function budgetValidator(budget) {
-    const { subBudgets, totalBudget } = budget;
+    const {
+        subBudgets,
+        totalBudget
+    } = budget;
+
     if (!subBudgets) {
         return true;
     }
@@ -50,13 +58,20 @@ const campaignSchema = new Schema({
     },
     start_date: Date,
     end_date: Date,
-    hashtags: { type: String },
-    mentions: { type: Schema.Types.Mixed },
-    brand: [brandScheme],
+    hashtags: [{ type: String }],
+    // mentions: { type: Schema.Types.Mixed },
+    _brand: {
+        type: Schema.Types.ObjectId,
+        required: true
+    },
     budget: budgetScheme,
     // todo add default role
-    role: { type: String },
-    // campaign_logo: { type: String },
+    // role: { type: String },
+    campaign_logo: { type: String },
+    _team_lead: {
+        type: Schema.Types.ObjectId,
+        required: true
+    },
     client_description: { type: String },
     internal_note: { type: String },
 }, {
@@ -65,18 +80,26 @@ const campaignSchema = new Schema({
     timestamps: true
 });
 
-campaignSchema.virtual('_mentions', {
-    ref: DATA_BASE_TABLE.INFLUENCER,
-    localField: 'mentions',
-    foreignField: 'user_name'
+campaignSchema.virtual('team_lead', {
+    ref: User,
+    localField: '_team_lead',
+    foreignField: '_id'
+});
+
+campaignSchema.virtual('brand', {
+    ref: Brand,
+    localField: '_brand',
+    foreignField: '_id'
 });
 
 campaignSchema
     .pre('find', function() {
-        this.populate('_mentions');
+        this.populate('team_lead');
+        this.populate('brand');
     })
     .pre('findOne', function() {
-        this.populate('_mentions');
+        this.populate('team_lead');
+        this.populate('brand');
     });
 
 module.exports = model(DATA_BASE_TABLE.CAMPAIGN, campaignSchema);

@@ -5,6 +5,7 @@ module.exports = {
         O_AUTH: 'O_Auth',
         INFLUENCER: 'Influencer',
         CAMPAIGN: 'Campaign',
+        BRAND: 'Brand',
     },
     ROLES: {
         ADMIN: 'admin',
