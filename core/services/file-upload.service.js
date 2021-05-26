@@ -21,11 +21,11 @@ cloudinary.config({
 });
 
 module.exports = {
-    uploadFile: (file) => {
+    uploadFile: (file, folder = null) => {
         const file64 = parser.format(path.extname(file.name)
             .toString(), file.data);
 
-        return cloudinary.uploader.upload(file64.content);
+        return cloudinary.uploader.upload(file64.content, { folder });
     },
 
     uploadRawFile: async (rawFile) => {
