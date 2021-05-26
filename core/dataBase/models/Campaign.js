@@ -4,10 +4,9 @@ const {
 } = require('mongoose');
 
 const { DATA_BASE_TABLE } = require('../../constants/magic-string.enum');
-const {
-    Brand,
-    User
-} = require('.');
+
+const Brand = require('./Brand');
+const User = require('./User');
 
 const budgetScheme = new Schema({
     totalBudget: Number,
