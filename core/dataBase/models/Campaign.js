@@ -9,24 +9,18 @@ const {
     User
 } = require('.');
 
-// const brandScheme = new Schema({
-//     name: {
-//         type: String,
-//         required: true
-//     },
-//     photoUrl: String
-// });
-
 const budgetScheme = new Schema({
     totalBudget: Number,
-    subBudgets: [{ // for example, Production Budget
-        target: String, // for example, Production
-        amount: Number
-    }],
-    validate: [
-        budgetValidator,
-        'Schema validation error: the sum of all subbudgets does not equal to the total budget'
-    ]
+    subBudgets: { // for example, Production Budget
+        type: [{
+            target: String, // for example, Production
+            amount: Number
+        }],
+        validate: [
+            budgetValidator,
+            'Schema validation error: the sum of all subbudgets does not equal to the total budget'
+        ]
+    }
 });
 
 function budgetValidator(budget) {
