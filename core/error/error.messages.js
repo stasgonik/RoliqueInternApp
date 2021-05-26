@@ -37,6 +37,13 @@ module.exports = {
     BAD_SOCIAL_PROFILE: {
         customCode: 4009
     },
+    BRAND_NAME_NOT_VALID: {
+        customCode: 40010
+    },
+    BRAND_LOGO_NOT_FOUND: {
+        customCode: 40011,
+        message: 'There is no main photo of the brand'
+    },
     // UNAUTHORIZED
     WRONG_TOKEN: {
         customCode: 4011
