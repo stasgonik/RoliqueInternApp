@@ -8,6 +8,8 @@ const {
     fileMiddleware
 } = require('../../middlewares');
 
+router.get('/', authMiddleware.checkAccessToken, brandController.getAllBrands);
+
 router.post('/',
     authMiddleware.checkAccessToken,
     fileMiddleware.checkFiles,
