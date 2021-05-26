@@ -10,16 +10,10 @@ const User = require('./User');
 
 const budgetScheme = new Schema({
     totalBudget: Number,
-    subBudgets: { // for example, Production Budget
-        type: [{
-            target: String, // for example, Production
-            amount: Number
-        }],
-        validate: [
-            budgetValidator,
-            'Schema validation error: the sum of all subbudgets does not equal to the total budget'
-        ]
-    }
+    subBudgets: [{ // for example, Production Budget
+        target: String, // for example, Production
+        amount: Number
+    }]
 });
 
 function budgetValidator(budget) {
@@ -57,7 +51,13 @@ const campaignSchema = new Schema({
         type: Schema.Types.ObjectId,
         required: true
     },
-    budget: budgetScheme,
+    budget: {
+        type: budgetScheme,
+        validate: [
+            budgetValidator,
+            'Schema validation error: the sum of all subbudgets does not equal to the total budget'
+        ]
+    },
     // todo add default role
     // role: { type: String },
     campaign_logo: { type: String },

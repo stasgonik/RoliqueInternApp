@@ -1,11 +1,12 @@
 const { campaignService } = require('../services');
 
 module.exports = {
-    createCampaign: (req, res, next) => {
+    createCampaign: async (req, res, next) => {
+        // TODO: first create brand, then add its id to req.body to create campaign
         try {
             const { body } = req;
 
-            const campaign = campaignService.createCampaign(body);
+            const campaign = await campaignService.createCampaign(body);
 
             res.json(campaign)
                 .status(200);
