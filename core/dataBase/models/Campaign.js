@@ -10,24 +10,48 @@ const User = require('./User');
 
 const budgetScheme = new Schema({
     totalBudget: Number,
-    subBudgets: [{ // for example, Production Budget
-        target: String, // for example, Production
-        amount: Number
-    }]
+    subBudgets: {
+        influencerBudget: {
+            type: Number,
+            default: null
+        },
+        socialAdsMediaBudget: {
+            type: Number,
+            default: null
+        },
+        productionBudget: {
+            type: Number,
+            default: null
+        },
+        handlingFee: {
+            type: Number,
+            default: null
+        },
+        otherBudget: {
+            type: Number,
+            default: null
+        },
+    }
 });
 
-function budgetValidator(budget) {
-    const {
-        subBudgets,
-        totalBudget
-    } = budget;
+function budgetValidator(scheme) {
+    const { subBudgets, totalBudget } = scheme._doc;
 
-    if (!subBudgets) {
-        return true;
+    let totalSum = 0;
+    let subBudgetsPresent = false;
+
+    for (const subBudgetsKey in subBudgets) {
+        if (subBudgets[subBudgetsKey]) {
+            subBudgetsPresent = true;
+            totalSum += subBudgets[subBudgetsKey];
+        }
     }
 
-    const totalSum = subBudgets.reduce((accumulator, currentValue) => accumulator + currentValue.amount, 0);
-    return totalSum === totalBudget;
+    if (subBudgetsPresent) {
+        return totalSum === totalBudget;
+    }
+
+    return true;
 }
 
 const campaignSchema = new Schema({
