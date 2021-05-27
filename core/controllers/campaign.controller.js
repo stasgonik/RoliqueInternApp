@@ -1,10 +1,13 @@
-const { campaignService } = require('../services');
+const { campaignService, fileService } = require('../services');
 
 module.exports = {
     createCampaign: async (req, res, next) => {
-        // TODO: first create brand, then add its id to req.body to create campaign
         try {
             const { body } = req;
+            if (req.avatar) {
+                const { url } = await fileService.uploadFile(req.avatar, 'campaign_logo');
+                body.campaign_logo = url;
+            }
 
             const campaign = await campaignService.createCampaign(body);
 

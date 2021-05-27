@@ -3,4 +3,5 @@ module.exports = {
     brandValidator: require('./brand'),
     userValidator: require('./user'),
     influencerValidator: require('./influencer'),
+    campaignValidator: require('./campaign'),
 };

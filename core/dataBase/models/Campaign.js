@@ -79,7 +79,7 @@ const campaignSchema = new Schema({
         type: budgetScheme,
         validate: [
             budgetValidator,
-            'Schema validation error: the sum of all subbudgets does not equal to the total budget'
+            'The sum of all subbudgets does not equal to the total budget'
         ]
     },
     // todo add default role
