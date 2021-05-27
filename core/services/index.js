@@ -1,5 +1,6 @@
 module.exports = {
     authService: require('./auth.service'),
+    brandService: require('./brand.service'),
     campaignService: require('./campaign.service'),
     emailService: require('./email.service'),
     userService: require('./user.service'),
