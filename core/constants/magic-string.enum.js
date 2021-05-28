@@ -42,5 +42,17 @@ module.exports = {
     PROFILE_DELETE: {
         NAME: '',
         FOLLOWERS: 0
+    },
+    CAMPAIGN_STATUS: {
+        REQUESTED: 'Requested',
+        PRE_PHASE: 'Pre-phase',
+        RUNNING: 'Running',
+        DONE: 'Done',
+    },
+    CAMPAIGN_EFFORT: {
+        NOT_SET: 'Not set',
+        LOW: 'Low',
+        MEDIUM: 'Medium',
+        HIGH: 'High',
     }
 };

@@ -6,17 +6,17 @@ const {
     authMiddleware,
     fileMiddleware,
     userMiddleware,
-    // campaignMiddleware
+    campaignMiddleware
 } = require('../../middlewares');
 
 const { magicString: { ROLES } } = require('../../constants');
 
 router.get('/', campaignController.getAllCampaign);
-// TODO: finish campaign validator
+
 router.post('/',
     authMiddleware.checkAccessToken,
     userMiddleware.checkRole([ROLES.ADMIN, ROLES.MANAGER]),
-    // campaignMiddleware.isNewCampaignValid,
+    campaignMiddleware.isNewCampaignValid,
     fileMiddleware.checkFiles,
     fileMiddleware.checkAvatar,
     campaignController.createCampaign);
