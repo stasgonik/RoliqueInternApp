@@ -1,3 +1,4 @@
 module.exports = {
-    isNewCampaignValid: require('./isNewCampaignValid')
+    isNewCampaignValid: require('./isNewCampaignValid'),
+    doesCampaignExist: require('./doesCampaignExist')
 };

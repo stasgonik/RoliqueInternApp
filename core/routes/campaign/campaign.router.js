@@ -17,6 +17,7 @@ router.post('/',
     authMiddleware.checkAccessToken,
     userMiddleware.checkRole([ROLES.ADMIN, ROLES.MANAGER]),
     campaignMiddleware.isNewCampaignValid,
+    campaignMiddleware.doesCampaignExist,
     fileMiddleware.checkFiles,
     fileMiddleware.checkAvatar,
     campaignController.createCampaign);

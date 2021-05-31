@@ -11,4 +11,5 @@ module.exports = {
             count
         };
     },
+    doesExist: (title) => Campaign.exists({ title })
 };

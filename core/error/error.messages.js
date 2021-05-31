@@ -64,5 +64,12 @@ module.exports = {
         customCode: 4043,
         message: 'Influencer not found!',
     },
-
+    CAMPAIGN_ALREADY_EXISTS: {
+        customCode: 40012,
+        message: 'Campaign with the same name already exists',
+    },
+    BAD_CAMPAIGN_LEAD: {
+        customCode: 40013,
+        message: 'This team lead is not assignable to any campaign',
+    }
 };

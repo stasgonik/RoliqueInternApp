@@ -21,13 +21,13 @@ module.exports = Joi.object({
     ),
     _brand: Joi.string()
         .required()
-        .custom((value => {
+        .custom(value => {
             if (userService.isIdValid(value)) {
                 return value;
             }
 
             throw new Error('the brand id is not a valid mongo id');
-        })),
+        }),
     budget: Joi.object({
         totalBudget: Joi.number(),
         subBudgets: Joi.object({
@@ -41,13 +41,13 @@ module.exports = Joi.object({
     campaign_logo: Joi.string(),
     _team_lead: Joi.string()
         .required()
-        .custom((value => {
+        .custom(value => {
             if (userService.isIdValid(value)) {
                 return value;
             }
 
-            throw new Error('the brand id is not a valid mongo id');
-        })),
+            throw new Error('the team lead id is not a valid mongo id');
+        }),
     client_description: Joi.string()
         .max(sizeLimits.CAMPAIGN_FIELD_MAX),
     internal_note: Joi.string()
