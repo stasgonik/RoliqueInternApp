@@ -20,15 +20,26 @@ module.exports = {
                 brand_logo
             } = req;
 
-            const { url } = await fileService.uploadFile(brand_logo, 'brand_logo');
+            let url = 0;
+            let brand;
 
-            const brand = await brandService.createBrand({
-                ...body,
-                photoUrl: url
-            });
+            if (brand_logo) {
+                const data = await fileService.uploadFile(brand_logo, 'brand_logo');
+                url = data.url;
+            }
+
+            if (url) {
+                brand = await brandService.createBrand({
+                    ...body,
+                    photoUrl: url
+                });
+            } else {
+                brand = await brandService.createBrand({
+                    ...body,
+                });
+            }
 
             res.json(brand);
-            next();
         } catch (e) {
             next(e);
         }

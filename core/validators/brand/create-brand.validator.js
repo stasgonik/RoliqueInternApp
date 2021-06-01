@@ -4,6 +4,5 @@ module.exports = Joi.object({
     name: Joi.string()
         .required()
         .trim()
-        .alphanum()
-        .lowercase(),
+        .alphanum(),
 });
