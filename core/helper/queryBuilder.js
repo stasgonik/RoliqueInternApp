@@ -1,7 +1,8 @@
 const {
     magicString: {
         INFLUENCER_STRING,
-        USER_STRING
+        USER_STRING,
+        CAMPAIGN_STRING
     }
 } = require('../constants');
 
@@ -10,7 +11,6 @@ module.exports = {
         let filterObject = {};
 
         for (const key in queryParams) {
-            console.log(key);
             switch (key) {
                 case USER_STRING.FIRST_NAME:
                     filterObject.first_name = {
@@ -109,6 +109,35 @@ module.exports = {
                     filterObject[key] = queryParams[key];
             }
         }
+        return filterObject;
+    },
+    campaignQueryBuilder: (queryParams) => {
+        const filterObject = {};
+
+        for (const key in queryParams) {
+            switch (key) {
+                case CAMPAIGN_STRING.TITLE:
+                    filterObject.title = {
+                        $regex: queryParams[CAMPAIGN_STRING.TITLE],
+                        $options: 'i'
+                    };
+                    break;
+                case CAMPAIGN_STRING.BRAND:
+                    filterObject._brand = queryParams[CAMPAIGN_STRING.BRAND];
+                    break;
+                case CAMPAIGN_STRING.BUDGET_LTE:
+                    filterObject['budget.totalBudget'] = Object.assign(filterObject['budget.totalBudget'] || {},
+                        { $lte: +queryParams[CAMPAIGN_STRING.BUDGET_LTE] });
+                    break;
+                case CAMPAIGN_STRING.BUDGET_GTE:
+                    filterObject['budget.totalBudget'] = Object.assign(filterObject['budget.totalBudget'] || {},
+                        { $gte: +queryParams[CAMPAIGN_STRING.BUDGET_GTE] });
+                    break;
+                default:
+                    filterObject[key] = queryParams[key];
+            }
+        }
+
         return filterObject;
     },
 };
