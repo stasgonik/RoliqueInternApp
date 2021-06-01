@@ -39,6 +39,14 @@ module.exports = {
         BIRTHDATE: 'birthdate',
         SEARCH: 'search'
     },
+    CAMPAIGN_STRING: {
+        TITLE: 'title',
+        STATUS: 'status',
+        EFFORT: 'effort',
+        BUDGET_GTE: 'gte',
+        BUDGET_LTE: 'lte',
+        BRAND: 'brand'
+    },
     PROFILE_DELETE: {
         NAME: '',
         FOLLOWERS: 0
