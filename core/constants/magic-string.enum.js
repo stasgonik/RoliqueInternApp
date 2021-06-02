@@ -43,8 +43,8 @@ module.exports = {
         TITLE: 'title',
         STATUS: 'status',
         EFFORT: 'effort',
-        BUDGET_GTE: 'gte',
-        BUDGET_LTE: 'lte',
+        BUDGET_GTE: 'budget_gte',
+        BUDGET_LTE: 'budget_lte',
         BRAND: 'brand'
     },
     PROFILE_DELETE: {
