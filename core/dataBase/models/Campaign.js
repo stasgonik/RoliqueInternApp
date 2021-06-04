@@ -23,6 +23,10 @@ const budgetScheme = new Schema({
             type: Number,
             default: null
         },
+        travelBudget: {
+            type: Number,
+            default: null
+        },
         handlingFee: {
             type: Number,
             default: null
