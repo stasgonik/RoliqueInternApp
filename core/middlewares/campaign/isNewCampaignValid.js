@@ -13,6 +13,10 @@ module.exports = async (req, res, next) => {
             req.body.budget = JSON.parse(req.body.budget);
         }
 
+        if (req.body.hashtags) {
+            req.body.hashtags = JSON.parse(req.body.hashtags);
+        }
+
         const { error } = campaignValidator.createCampaignValidator.validate(req.body);
         if (error) {
             throw new ErrorHandler(errorCodes.BAD_REQUEST, errorMessages.BAD_REQUEST.customCode, error.details[0].message);
