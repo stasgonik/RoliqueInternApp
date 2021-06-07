@@ -22,6 +22,12 @@ router.post('/',
     fileMiddleware.checkAvatar,
     campaignController.createCampaign);
 
-router.put('/', (req, res) => res.json('update'));
+router.put('/:id',
+    authMiddleware.checkAccessToken,
+    userMiddleware.checkRole([ROLES.ADMIN, ROLES.MANAGER]),
+    campaignMiddleware.checkIsUpdateCampaign,
+    fileMiddleware.checkFiles,
+    fileMiddleware.checkAvatar,
+    campaignController.updateCampaign);
 
 module.exports = router;

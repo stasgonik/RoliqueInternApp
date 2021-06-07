@@ -44,6 +44,10 @@ module.exports = {
         customCode: 40011,
         message: 'There is no main photo of the brand'
     },
+    ID_NOT_EXIST: {
+        customCode: 40012,
+        message: 'Id not exist!'
+    },
     // UNAUTHORIZED
     WRONG_TOKEN: {
         customCode: 4011

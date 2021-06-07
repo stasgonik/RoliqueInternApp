@@ -1,3 +1,4 @@
 module.exports = {
-    createCampaignValidator: require('./create-campaign-validator')
+    createCampaignValidator: require('./create-campaign-validator'),
+    updateCampaignValidator: require('./update-campaign-validator'),
 };

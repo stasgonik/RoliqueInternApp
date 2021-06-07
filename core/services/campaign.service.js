@@ -11,5 +11,7 @@ module.exports = {
             count
         };
     },
+    getSingleCampaign: (params) => Campaign.findOne(params),
+    updateById: (id, updateBody) => Campaign.updateOne({ _id: id }, updateBody),
     doesExist: (title) => Campaign.exists({ title })
 };
