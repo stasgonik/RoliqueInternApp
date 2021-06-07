@@ -41,13 +41,13 @@ module.exports = {
 
             if (req.avatar) {
                 if (campaign.campaign_logo) {
-                    await fileService.removeFile(campaign.campaign_logo);
+                    await fileService.removeFile(campaign.campaign_logo, true);
                 }
                 const { url } = await fileService.uploadFile(req.avatar, 'campaign_logo');
                 body.campaign_logo = url;
             }
 
-            await campaignService.getSingleCampaign(id, body);
+            await campaignService.updateById(id, body);
 
             res.json('updated');
         } catch (e) {
