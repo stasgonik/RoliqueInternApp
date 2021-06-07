@@ -5,10 +5,10 @@ const {
 
 const { magicString: { DATA_BASE_TABLE } } = require('../../constants');
 
-const {
-    Brand,
-    User
-} = require('./index');
+// const { Brand, User } = require('./index');
+
+const Brand = require('./Brand');
+const User = require('./User');
 
 const budgetScheme = new Schema({
     totalBudget: Number,
@@ -95,7 +95,7 @@ const campaignSchema = new Schema({
     // role: { type: String },
     campaign_logo: { type: String },
     _team_lead: {
-        type: Schema.Types.ObjectId,
+        type: [Schema.Types.ObjectId],
         required: true
     },
     client_description: { type: String },
