@@ -51,8 +51,6 @@ module.exports = {
             const folder = Arr[Arr.length - 2];
             string = `${folder}/${string}`;
         }
-
-        console.log(string);
         // eslint-disable-next-line require-await
         cloudinary.uploader.destroy(string, async (err) => {
             if (err) {
