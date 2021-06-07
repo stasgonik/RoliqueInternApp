@@ -41,10 +41,18 @@ module.exports = {
         return cloudinary.uploader.upload(file64.content);
     },
 
-    removeFile: (file) => {
+    removeFile: (file, folder = false) => {
         const arrString = file.split('.');
-        const string = arrString[arrString.length - 2].split('/')
+        let string = arrString[arrString.length - 2].split('/')
             .pop();
+        if (folder) {
+            const Arr = arrString[arrString.length - 2].split('/');
+            // eslint-disable-next-line no-shadow
+            const folder = Arr[Arr.length - 2];
+            string = `${folder}/${string}`;
+        }
+
+        console.log(string);
         // eslint-disable-next-line require-await
         cloudinary.uploader.destroy(string, async (err) => {
             if (err) {
