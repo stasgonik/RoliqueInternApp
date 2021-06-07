@@ -3,7 +3,7 @@ const {
     model
 } = require('mongoose');
 
-const { DATA_BASE_TABLE } = require('../../constants/magic-string.enum');
+const { magicString: { DATA_BASE_TABLE } } = require('../../constants');
 
 const brandScheme = new Schema({
     name: {

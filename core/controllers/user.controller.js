@@ -9,12 +9,12 @@ const { magicString: { EMAIL_ACTIONS } } = require('../constants');
 
 module.exports = {
     getUsers: async (req, res, next) => {
-        const {
-            query,
-            responseInfo
-        } = req;
-
         try {
+            const {
+                query,
+                responseInfo
+            } = req;
+
             const users = await userService.getAllUsers(query, responseInfo);
 
             res.json(users);

@@ -22,4 +22,6 @@ router.post('/',
     fileMiddleware.checkAvatar,
     campaignController.createCampaign);
 
+router.put('/', (req, res) => res.json('update'));
+
 module.exports = router;

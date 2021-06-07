@@ -3,10 +3,12 @@ const {
     model
 } = require('mongoose');
 
-const { DATA_BASE_TABLE } = require('../../constants/magic-string.enum');
+const { magicString: { DATA_BASE_TABLE } } = require('../../constants');
 
-const Brand = require('./Brand');
-const User = require('./User');
+const {
+    Brand,
+    User
+} = require('./index');
 
 const budgetScheme = new Schema({
     totalBudget: Number,
@@ -39,7 +41,10 @@ const budgetScheme = new Schema({
 });
 
 function budgetValidator(scheme) {
-    const { subBudgets, totalBudget } = scheme._doc;
+    const {
+        subBudgets,
+        totalBudget
+    } = scheme._doc;
 
     let totalSum = 0;
     let subBudgetsPresent = false;

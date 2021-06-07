@@ -2,8 +2,7 @@ const express = require('express');
 const fileuploader = require('express-fileupload');
 const mongoose = require('mongoose');
 const path = require('path');
-const dotenv = require('dotenv')
-    .config();
+const dotenv = require('dotenv').config();
 const morgan = require('morgan');
 const cors = require('cors');
 

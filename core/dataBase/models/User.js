@@ -4,9 +4,11 @@ const {
 } = require('mongoose');
 
 const {
-    DATA_BASE_TABLE,
-    ROLES
-} = require('../../constants/magic-string.enum');
+    magicString: {
+        DATA_BASE_TABLE,
+        ROLES
+    }
+} = require('../../constants');
 
 const userScheme = new Schema({
     first_name: {
@@ -32,7 +34,7 @@ const userScheme = new Schema({
     },
     forgot_token: String,
     profile_picture: String,
-  // relative path in the static folder
+    // relative path in the static folder
 }, {
     toObject: { virtuals: true },
     toJSON: { virtuals: true }

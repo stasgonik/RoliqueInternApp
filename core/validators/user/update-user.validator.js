@@ -1,7 +1,7 @@
 const Joi = require('joi');
 
-const { regexp } = require('../../constants');
 const {
+    regexp,
     sizeLimits,
     magicString: { ROLES }
 } = require('../../constants');

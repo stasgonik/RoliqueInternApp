@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 
-// userService
 const { magicString: { AUTHORIZATION } } = require('../../constants');
 const { jwtSecret: { JWT_REFRESH_SECRET } } = require('../../config');
 const { errorMessages: { NO_TOKEN, WRONG_TOKEN }, errorCodes, ErrorHandler } = require('../../error');

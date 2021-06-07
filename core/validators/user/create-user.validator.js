@@ -1,7 +1,10 @@
 const Joi = require('joi');
 
-const { regexp } = require('../../constants');
-const { sizeLimits, magicString: { ROLES } } = require('../../constants');
+const {
+    sizeLimits,
+    regexp,
+    magicString: { ROLES }
+} = require('../../constants');
 
 module.exports = Joi.object({
     first_name: Joi.string()

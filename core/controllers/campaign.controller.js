@@ -18,8 +18,9 @@ module.exports = {
         }
     },
     getAllCampaign: async (req, res, next) => {
-        const { query } = req;
         try {
+            const { query } = req;
+
             const campaigns = await campaignService.findAll(query);
 
             res.json(campaigns);

@@ -1,7 +1,9 @@
 const Joi = require('joi');
 
-const { regexp } = require('../../constants');
-const { sizeLimits } = require('../../constants');
+const {
+    regexp,
+    sizeLimits
+} = require('../../constants');
 const socialProfile = require('./influencer-profiles.validator');
 
 module.exports = Joi.object({
@@ -20,5 +22,6 @@ module.exports = Joi.object({
         .min(sizeLimits.NAME_LENGTH_MIN)
         .max(sizeLimits.FIELD_LENGTH_MAX)
         .required(),
-    social_profiles: Joi.array().items(socialProfile)
+    social_profiles: Joi.array()
+        .items(socialProfile)
 });
