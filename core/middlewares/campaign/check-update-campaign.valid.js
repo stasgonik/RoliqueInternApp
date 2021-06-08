@@ -42,6 +42,13 @@ module.exports = async (req, res, next) => {
             throw new ErrorHandler(errorCodes.BAD_REQUEST, errorMessages.BAD_REQUEST.customCode, error.details[0].message);
         }
 
+        if (!body.budget) {
+            body.budget = null;
+        }
+        if (!body.hashtags) {
+            body.hashtags = null;
+        }
+
         req.campaign = campaign;
         req.id = id;
         next();

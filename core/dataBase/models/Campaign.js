@@ -15,27 +15,21 @@ const budgetScheme = new Schema({
     subBudgets: {
         influencerBudget: {
             type: Number,
-            default: null
         },
         socialAdsMediaBudget: {
             type: Number,
-            default: null
         },
         productionBudget: {
             type: Number,
-            default: null
         },
         travelBudget: {
             type: Number,
-            default: null
         },
         handlingFee: {
             type: Number,
-            default: null
         },
         otherBudget: {
             type: Number,
-            default: null
         },
     }
 });
