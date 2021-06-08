@@ -34,6 +34,7 @@ module.exports = Joi.object({
             influencerBudget: Joi.number(),
             socialAdsMediaBudget: Joi.number(),
             productionBudget: Joi.number(),
+            travelBudget: Joi.number(),
             handlingFee: Joi.number(),
             otherBudget: Joi.number(),
         })
