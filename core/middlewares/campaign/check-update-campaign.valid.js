@@ -13,6 +13,15 @@ module.exports = async (req, res, next) => {
             params: { id }
         } = req;
 
+        if (body.budget) {
+            body.budget = JSON.parse(body.budget);
+        }
+
+        if (body.hashtags) {
+            body.hashtags = JSON.parse(body.hashtags);
+        }
+        console.log(body);
+
         if (!id) {
             throw new ErrorHandler(errorCodes.BAD_REQUEST,
                 errorMessages.ID_NOT_EXIST.customCode,
