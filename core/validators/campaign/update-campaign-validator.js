@@ -1,6 +1,12 @@
 const Joi = require('joi');
 
-const { sizeLimits, magicString: { CAMPAIGN_STATUS, CAMPAIGN_EFFORT } } = require('../../constants');
+const {
+    sizeLimits,
+    magicString: {
+        CAMPAIGN_STATUS,
+        CAMPAIGN_EFFORT
+    }
+} = require('../../constants');
 const { userService } = require('../../services');
 
 module.exports = Joi.object({
@@ -11,11 +17,12 @@ module.exports = Joi.object({
         .valid(...Object.values(CAMPAIGN_EFFORT)),
     start_date: Joi.date(),
     end_date: Joi.date(),
-    hashtags: Joi.array().items(
-        Joi.string()
-            .min(sizeLimits.NAME_LENGTH_MIN)
-            .max(sizeLimits.FIELD_LENGTH_MAX)
-    ),
+    hashtags: Joi.array()
+        .items(
+            Joi.string()
+                .min(sizeLimits.NAME_LENGTH_MIN)
+                .max(sizeLimits.FIELD_LENGTH_MAX)
+        ),
     _brand: Joi.string()
         .custom(value => {
             if (userService.isIdValid(value)) {
@@ -30,6 +37,7 @@ module.exports = Joi.object({
             influencerBudget: Joi.number(),
             socialAdsMediaBudget: Joi.number(),
             productionBudget: Joi.number(),
+            travelBudget: Joi.number(),
             handlingFee: Joi.number(),
             otherBudget: Joi.number(),
         })
