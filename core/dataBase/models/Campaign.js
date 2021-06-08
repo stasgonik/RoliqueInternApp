@@ -95,7 +95,7 @@ const campaignSchema = new Schema({
     // role: { type: String },
     campaign_logo: { type: String },
     _team_lead: {
-        type: [Schema.Types.ObjectId],
+        type: Schema.Types.ObjectId,
         required: true
     },
     client_description: { type: String },
