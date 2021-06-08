@@ -31,6 +31,14 @@ module.exports = {
             next(e);
         }
     },
+    getSingleCampaign: (req, res, next) => {
+        try {
+            const { campaign } = req;
+            res.json(campaign);
+        } catch (e) {
+            next(e);
+        }
+    },
     updateCampaign: async (req, res, next) => {
         try {
             const {

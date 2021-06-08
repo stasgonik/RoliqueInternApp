@@ -12,6 +12,7 @@ const {
 const { magicString: { ROLES } } = require('../../constants');
 
 router.get('/', campaignMiddleware.buildQueryParams, campaignController.getAllCampaign);
+router.get('/:id', campaignMiddleware.checkIsIdValid, campaignController.getSingleCampaign);
 
 router.post('/',
     authMiddleware.checkAccessToken,
