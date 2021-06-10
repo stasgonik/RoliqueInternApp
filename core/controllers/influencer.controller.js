@@ -87,7 +87,8 @@ module.exports = {
                 id,
                 avatar,
                 body: { social_profiles },
-                instagramChanged
+                instagramChanged,
+                youtubeChanged
             } = req;
 
             if (avatar) {
@@ -126,6 +127,11 @@ module.exports = {
                 } else {
                     req.body.instagram_photos = [];
                 }
+            }
+
+            if (youtubeChanged && social_profiles) {
+                const youtubeProfile = social_profiles.find(profile => profile.social_network_name === SOCIAL_NETWORKS.YOUTUBE);
+                req.body.youtube_videos = await youtubeService.getYouTubeVideosByUrl(youtubeProfile.social_network_profile);
             }
 
             await influencerService.updateInfluencerById(id, req.body);
