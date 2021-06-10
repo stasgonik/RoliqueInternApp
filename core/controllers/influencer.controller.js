@@ -1,6 +1,7 @@
 const {
     influencerService,
     fileService,
+    youtubeService,
     instagramService
 } = require('../services');
 const {
@@ -126,6 +127,16 @@ module.exports = {
             const newInfluencer = await influencerService.getSingleInfluencer({ _id: id });
 
             res.json(newInfluencer);
+        } catch (e) {
+            next(e);
+        }
+    },
+    test: async (req, res, next) => {
+        try {
+            const { params: { username } } = req;
+
+            const items = await youtubeService.getYouTubeVideoByUsername(username);
+            res.json(items);
         } catch (e) {
             next(e);
         }

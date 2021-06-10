@@ -1,6 +1,7 @@
-const router = require('express').Router();
-
+const router = require('express')
+    .Router();
 const { influencerController } = require('../../controllers');
+
 const {
     influencerMiddleware,
     authMiddleware,
@@ -39,5 +40,7 @@ router.put('/:id',
     fileMiddleware.checkFiles,
     fileMiddleware.checkAvatar,
     influencerController.updateInfluencer);
+
+router.get('/test/:username', influencerController.test);
 
 module.exports = router;

@@ -7,4 +7,5 @@ module.exports = {
     fileService: require('./file-upload.service'),
     influencerService: require('./influencer.service'),
     instagramService: require('./instagram.service'),
+    youtubeService: require('./youtube.service'),
 };

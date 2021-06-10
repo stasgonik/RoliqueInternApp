@@ -17,4 +17,6 @@ module.exports = {
 
     INSTAGRAM: process.env.INSTAGRAM,
     INSTAGRAM_PASS: process.env.INSTAGRAM_PASS,
+
+    YOUTUBE_API_KEY: process.env.YOUTUBE_API_KEY,
 };
