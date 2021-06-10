@@ -55,6 +55,7 @@ module.exports = {
             }
 
             const instagramProfile = social_profiles.find(profile => profile.social_network_name === SOCIAL_NETWORKS.INSTAGRAM);
+            const youtubeProfile = social_profiles.find(profile => profile.social_network_name === SOCIAL_NETWORKS.YOUTUBE);
             if (instagramProfile) {
                 const photos = await instagramService.getPhotosUrls(instagramProfile.social_network_profile);
                 if (photos.length) {
@@ -67,6 +68,10 @@ module.exports = {
 
                     req.body.instagram_photos = cloudUrls;
                 }
+            }
+
+            if (youtubeProfile) {
+                req.body.youtube_videos = await youtubeService.getYouTubeVideosByUrl(youtubeProfile.social_network_profile);
             }
 
             await influencerService.createInfluencer(req.body);
@@ -108,6 +113,7 @@ module.exports = {
                 }
 
                 const photos = await instagramService.getPhotosUrls(instagramProfile.social_network_profile);
+
                 if (photos.length) {
                     const photoFiles = await instagramService.fetchPhotoUrls(photos);
 
@@ -127,16 +133,6 @@ module.exports = {
             const newInfluencer = await influencerService.getSingleInfluencer({ _id: id });
 
             res.json(newInfluencer);
-        } catch (e) {
-            next(e);
-        }
-    },
-    test: async (req, res, next) => {
-        try {
-            const { params: { username } } = req;
-
-            const items = await youtubeService.getYouTubeVideoByUsername(username);
-            res.json(items);
         } catch (e) {
             next(e);
         }

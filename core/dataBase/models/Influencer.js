@@ -32,7 +32,8 @@ const influencerScheme = new Schema({
         default: '—'
     },
     profile_picture: String,
-    instagram_photos: [String]
+    instagram_photos: [String],
+    youtube_videos: [String],
 }, {
     toObject: { virtuals: true },
     toJSON: { virtuals: true }

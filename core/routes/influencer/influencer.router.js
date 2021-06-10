@@ -41,6 +41,4 @@ router.put('/:id',
     fileMiddleware.checkAvatar,
     influencerController.updateInfluencer);
 
-router.get('/test/:username', influencerController.test);
-
 module.exports = router;
