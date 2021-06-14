@@ -60,6 +60,9 @@ module.exports = async (req, res, next) => {
                 if (leftPart === SOCIAL_NETWORKS.INSTAGRAM) {
                     req.instagramChanged = true;
                 }
+                if (leftPart === SOCIAL_NETWORKS.YOUTUBE) {
+                    req.youtubeChanged = true;
+                }
 
                 const newProfile = {
                     social_network_name: leftPart,

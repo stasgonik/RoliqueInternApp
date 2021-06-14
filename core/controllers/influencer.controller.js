@@ -1,6 +1,7 @@
 const {
     influencerService,
     fileService,
+    youtubeService,
     instagramService
 } = require('../services');
 const {
@@ -54,18 +55,43 @@ module.exports = {
             }
 
             const instagramProfile = social_profiles.find(profile => profile.social_network_name === SOCIAL_NETWORKS.INSTAGRAM);
+            const youtubeProfile = social_profiles.find(profile => profile.social_network_name === SOCIAL_NETWORKS.YOUTUBE);
             if (instagramProfile) {
                 const photos = await instagramService.getPhotosUrls(instagramProfile.social_network_profile);
                 if (photos.length) {
                     const photoFiles = await instagramService.fetchPhotoUrls(photos);
 
-                    let cloudUrlsPromises = photoFiles.map(file => fileService.uploadRawFile(file));
-                    cloudUrlsPromises = await Promise.allSettled(cloudUrlsPromises);
+                    const cloudUrlsPromises = photoFiles.map(file => {
+                        const preview = fileService.uploadRawFile(file.preview);
+                        return {
+                            preview,
+                            publishedAt: file.publishedAt
+                        };
+                    });
+                    const instagramPhotos = [];
+                    for (const cloudUrlsPromise of cloudUrlsPromises) {
+                        // eslint-disable-next-line no-await-in-loop
+                        const { url } = await cloudUrlsPromise.preview;
 
-                    const cloudUrls = cloudUrlsPromises.map(promiseObj => promiseObj.value.url);
+                        instagramPhotos.push({
+                            preview: url,
+                            publishedAt: cloudUrlsPromise.publishedAt
+                        });
+                    }
 
-                    req.body.instagram_photos = cloudUrls;
+                    // const cloudUrls = cloudUrlsPromises.map(promiseObj => promiseObj.value.url);
+
+                    req.body.instagram_photos = instagramPhotos;
                 }
+            }
+
+            if (youtubeProfile) {
+                const {
+                    videoUrl,
+                    username
+                } = await youtubeService.getYouTubeVideosByUrl(youtubeProfile.social_network_profile);
+                req.body.youtube_videos = videoUrl;
+                req.body.youtube_username = username;
             }
 
             await influencerService.createInfluencer(req.body);
@@ -81,7 +107,8 @@ module.exports = {
                 id,
                 avatar,
                 body: { social_profiles },
-                instagramChanged
+                instagramChanged,
+                youtubeChanged
             } = req;
 
             if (avatar) {
@@ -100,25 +127,51 @@ module.exports = {
             }
 
             if (instagramProfile) {
-                console.log('here');
                 if (oldInfluencer.instagram_photos) {
-                    const removeFilesPromises = oldInfluencer.instagram_photos.map(photo => fileService.removeFile(photo));
+                    // eslint-disable-next-line max-len
+                    const removeFilesPromises = oldInfluencer.instagram_photos.map(photo => fileService.removeFile(photo.preview));
                     await Promise.allSettled(removeFilesPromises);
                 }
 
                 const photos = await instagramService.getPhotosUrls(instagramProfile.social_network_profile);
+
                 if (photos.length) {
                     const photoFiles = await instagramService.fetchPhotoUrls(photos);
 
-                    let cloudUrlsPromises = photoFiles.map(file => fileService.uploadRawFile(file));
-                    cloudUrlsPromises = await Promise.allSettled(cloudUrlsPromises);
+                    const cloudUrlsPromises = photoFiles.map(file => {
+                        const preview = fileService.uploadRawFile(file.preview);
+                        return {
+                            preview,
+                            publishedAt: file.publishedAt
+                        };
+                    });
+                    const instagramPhotos = [];
+                    for (const cloudUrlsPromise of cloudUrlsPromises) {
+                        // eslint-disable-next-line no-await-in-loop
+                        const { url } = await cloudUrlsPromise.preview;
 
-                    const cloudUrls = cloudUrlsPromises.map(promiseObj => promiseObj.value.url);
+                        instagramPhotos.push({
+                            preview: url,
+                            publishedAt: cloudUrlsPromise.publishedAt
+                        });
+                    }
 
-                    req.body.instagram_photos = cloudUrls;
+                    // const cloudUrls = cloudUrlsPromises.map(promiseObj => promiseObj.value.url);
+
+                    req.body.instagram_photos = instagramPhotos;
                 } else {
                     req.body.instagram_photos = [];
                 }
+            }
+
+            if (youtubeChanged && social_profiles) {
+                const youtubeProfile = social_profiles.find(profile => profile.social_network_name === SOCIAL_NETWORKS.YOUTUBE);
+                const {
+                    username,
+                    videoUrl
+                } = await youtubeService.getYouTubeVideosByUrl(youtubeProfile.social_network_profile);
+                req.body.youtube_videos = videoUrl;
+                req.body.youtube_username = username;
             }
 
             await influencerService.updateInfluencerById(id, req.body);

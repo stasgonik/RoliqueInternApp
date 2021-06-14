@@ -42,6 +42,7 @@ module.exports = {
     },
 
     removeFile: (file, folder = false) => {
+        console.log(file);
         const arrString = file.split('.');
         let string = arrString[arrString.length - 2].split('/')
             .pop();
