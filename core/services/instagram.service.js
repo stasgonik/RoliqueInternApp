@@ -21,15 +21,22 @@ module.exports = {
         const page = await reelsFeed.items();
 
         for (const post of page) {
+            const publishedAt = new Date(+post.taken_at * 1000);
             if (photos.length < 12) {
                 if (post.image_versions2) {
-                    photos.push(post.image_versions2.candidates[0].url);
+                    photos.push({
+                        preview: post.image_versions2.candidates[0].url,
+                        publishedAt
+                    });
                 }
 
                 if (post.carousel_media && photos.length < 12) {
                     for (const photo of post.carousel_media) {
                         if (photos.length < 12) {
-                            photos.push(photo.image_versions2.candidates[0].url);
+                            photos.push({
+                                preview: photo.image_versions2.candidates[0].url,
+                                publishedAt
+                            });
                         }
                     }
                 }
@@ -43,16 +50,24 @@ module.exports = {
         const allPromises = [];
 
         for (const photoUrl of photoUrls) {
-            const newPhotoPromise = fetch(photoUrl).then(res => res.blob());
-            allPromises.push(newPhotoPromise);
+            const newPhotoPromise = fetch(photoUrl.preview)
+                .then(res => res.blob());
+            allPromises.push({
+                preview: newPhotoPromise,
+                publishedAt: photoUrl.publishedAt
+            });
         }
 
-        const promisesResults = await Promise.allSettled(allPromises);
-        // eslint-disable-next-line array-callback-return
-        return promisesResults.map(promiseObj => {
-            if (promiseObj.status === 'fulfilled') {
-                return promiseObj.value;
-            }
-        });
+        const istagramPhotos = [];
+        for (const allPromise of allPromises) {
+            // eslint-disable-next-line no-await-in-loop
+            const preview = await allPromise.preview;
+
+            istagramPhotos.push({
+                preview,
+                publishedAt: allPromise.publishedAt
+            });
+        }
+        return istagramPhotos;
     }
 };

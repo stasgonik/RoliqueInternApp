@@ -9,27 +9,38 @@ module.exports = {
         try {
             const channelType = url.split('/')[url.split('/').length - 2];
 
-            const id = url.split('/').pop();
+            const id = url.split('/')
+                .pop();
 
             const sorting = (items) => {
                 const videoUrl = [];
 
-                items.map(value => videoUrl.push(value.id.videoId));
+                const username = items.pop().snippet.channelTitle;
 
-                return videoUrl;
+                items.map(value => videoUrl.push({
+                    videoId: value.id.videoId,
+                    publishedAt: value.snippet.publishedAt,
+                    preview: value.snippet.thumbnails.high.url,
+                }));
+
+                return {
+                    videoUrl,
+                    username
+                };
             };
             if (channelType !== 'channel') {
-                const username = url.split('/').pop();
+                const username = url.split('/')
+                    .pop();
 
-                const { data } = await service.channels.list({
+                const channelDetails = await service.channels.list({
                     key: YOUTUBE_API_KEY,
                     part: 'snippet,contentDetails,statistics',
                     forUsername: username,
                 });
 
-                const channelId = data.items[0].id;
+                const channelId = channelDetails.data.items[0].id;
 
-                const { data: { items } } = await service.search.list({
+                const { data } = await service.search.list({
                     key: YOUTUBE_API_KEY,
                     part: 'snippet',
                     channelId,
@@ -38,7 +49,8 @@ module.exports = {
                     type: 'video'
                 });
 
-                return sorting(items);
+                console.log(data);
+                return sorting(data.items);
             }
             const { data: { items } } = await service.search.list({
                 key: YOUTUBE_API_KEY,
