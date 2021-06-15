@@ -12,15 +12,7 @@ const socialProfilesScheme = new Schema({
     social_network_followers: Number
 });
 
-const youtubeSubSchema = new Schema({
-    _id: false,
-    id: String,
-    publishedAt: Date,
-    preview: String,
-    social_name: String
-});
-
-const instagramSubSchema = new Schema({
+const socialDataSubSchema = new Schema({
     _id: false,
     id: String,
     publishedAt: Date,
@@ -48,8 +40,8 @@ const influencerScheme = new Schema({
         default: '—'
     },
     profile_picture: String,
-    instagram_photos: [instagramSubSchema],
-    youtube_videos: [youtubeSubSchema],
+    instagram_photos: [socialDataSubSchema],
+    youtube_videos: [socialDataSubSchema],
     youtube_username: String,
 }, {
     toObject: { virtuals: true },
