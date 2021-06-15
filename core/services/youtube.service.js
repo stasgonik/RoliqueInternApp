@@ -29,7 +29,7 @@ module.exports = {
                     key: YOUTUBE_API_KEY,
                     part: 'snippet',
                     ...params,
-                    maxResults: '12',
+                    maxResults: '13',
                     order: 'date',
                     type: 'video'
                 });
