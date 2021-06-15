@@ -9,7 +9,8 @@ const { priorities: { networks: socialNetworksPrio } } = require('../../config')
 const socialProfilesScheme = new Schema({
     social_network_name: String,
     social_network_profile: String,
-    social_network_followers: Number
+    social_network_followers: Number,
+    social_network_url: String
 });
 
 const socialDataSubSchema = new Schema({
@@ -42,7 +43,6 @@ const influencerScheme = new Schema({
     profile_picture: String,
     instagram_photos: [socialDataSubSchema],
     youtube_videos: [socialDataSubSchema],
-    youtube_username: String,
 }, {
     toObject: { virtuals: true },
     toJSON: { virtuals: true }

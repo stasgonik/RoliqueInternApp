@@ -90,7 +90,13 @@ module.exports = {
                     username
                 } = await youtubeService.getYouTubeVideosByUrl(youtubeProfile.social_network_profile);
                 req.body.youtube_videos = videoUrl;
-                req.body.youtube_username = username;
+                youtubeProfile.social_network_url = youtubeProfile.social_network_profile;
+                youtubeProfile.social_network_profile = username;
+                req.body.social_profiles = req.body.social_profiles.filter(value => value.social_network_name !== 'youtube');
+                req.body.social_profiles = [
+                    ...req.body.social_profiles,
+                    youtubeProfile
+                ];
             }
 
             await influencerService.createInfluencer(req.body);
@@ -171,7 +177,14 @@ module.exports = {
                     videoUrl
                 } = await youtubeService.getYouTubeVideosByUrl(youtubeProfile.social_network_profile);
                 req.body.youtube_videos = videoUrl;
-                req.body.youtube_username = username;
+                youtubeProfile.social_network_url = youtubeProfile.social_network_profile;
+                youtubeProfile.social_network_profile = username;
+
+                req.body.social_profiles = req.body.social_profiles.filter(value => value.social_network_name !== 'youtube');
+                req.body.social_profiles = [
+                    ...req.body.social_profiles,
+                    youtubeProfile
+                ];
             }
 
             await influencerService.updateInfluencerById(id, req.body);
