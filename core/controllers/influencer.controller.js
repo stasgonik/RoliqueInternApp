@@ -65,17 +65,18 @@ module.exports = {
                         const preview = fileService.uploadRawFile(file.preview);
                         return {
                             preview,
-                            publishedAt: file.publishedAt
+                            publishedAt: file.publishedAt,
+                            id: file.id
                         };
                     });
                     const instagramPhotos = [];
                     for (const cloudUrlsPromise of cloudUrlsPromises) {
                         // eslint-disable-next-line no-await-in-loop
                         const { url } = await cloudUrlsPromise.preview;
-
                         instagramPhotos.push({
                             preview: url,
                             publishedAt: cloudUrlsPromise.publishedAt,
+                            id: cloudUrlsPromise.id,
                             social_name: 'instagram'
                         });
                     }
@@ -140,7 +141,8 @@ module.exports = {
                         const preview = fileService.uploadRawFile(file.preview);
                         return {
                             preview,
-                            publishedAt: file.publishedAt
+                            publishedAt: file.publishedAt,
+                            id: file.id
                         };
                     });
                     const instagramPhotos = [];
@@ -151,6 +153,7 @@ module.exports = {
                         instagramPhotos.push({
                             preview: url,
                             publishedAt: cloudUrlsPromise.publishedAt,
+                            id: cloudUrlsPromise.id,
                             social_name: 'instagram'
                         });
                     }

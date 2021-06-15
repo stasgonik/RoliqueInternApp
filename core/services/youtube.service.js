@@ -18,7 +18,7 @@ module.exports = {
                 const username = items.pop().snippet.channelTitle;
 
                 items.map(value => videoUrl.push({
-                    videoId: value.id.videoId,
+                    id: value.id.videoId,
                     publishedAt: value.snippet.publishedAt,
                     preview: value.snippet.thumbnails.high.url,
                     social_name: 'youtube'

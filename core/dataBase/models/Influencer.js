@@ -14,7 +14,7 @@ const socialProfilesScheme = new Schema({
 
 const youtubeSubSchema = new Schema({
     _id: false,
-    videoId: String,
+    id: String,
     publishedAt: Date,
     preview: String,
     social_name: String
@@ -22,6 +22,7 @@ const youtubeSubSchema = new Schema({
 
 const instagramSubSchema = new Schema({
     _id: false,
+    id: String,
     publishedAt: Date,
     preview: String,
     social_name: String

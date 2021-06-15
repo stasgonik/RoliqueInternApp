@@ -21,12 +21,14 @@ module.exports = {
         const page = await reelsFeed.items();
 
         for (const post of page) {
+            const id = post.code;
             const publishedAt = new Date(+post.taken_at * 1000);
             if (photos.length < 12) {
                 if (post.image_versions2) {
                     photos.push({
                         preview: post.image_versions2.candidates[0].url,
-                        publishedAt
+                        publishedAt,
+                        id
                     });
                 }
 
@@ -35,7 +37,8 @@ module.exports = {
                         if (photos.length < 12) {
                             photos.push({
                                 preview: photo.image_versions2.candidates[0].url,
-                                publishedAt
+                                publishedAt,
+                                id
                             });
                         }
                     }
@@ -54,7 +57,8 @@ module.exports = {
                 .then(res => res.blob());
             allPromises.push({
                 preview: newPhotoPromise,
-                publishedAt: photoUrl.publishedAt
+                publishedAt: photoUrl.publishedAt,
+                id: photoUrl.id
             });
         }
 
@@ -65,7 +69,8 @@ module.exports = {
 
             istagramPhotos.push({
                 preview,
-                publishedAt: allPromise.publishedAt
+                publishedAt: allPromise.publishedAt,
+                id: allPromise.id
             });
         }
         return istagramPhotos;
