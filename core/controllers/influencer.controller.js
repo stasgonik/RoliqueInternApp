@@ -75,12 +75,10 @@ module.exports = {
 
                         instagramPhotos.push({
                             preview: url,
-                            publishedAt: cloudUrlsPromise.publishedAt
+                            publishedAt: cloudUrlsPromise.publishedAt,
+                            social_name: 'instagram'
                         });
                     }
-
-                    // const cloudUrls = cloudUrlsPromises.map(promiseObj => promiseObj.value.url);
-
                     req.body.instagram_photos = instagramPhotos;
                 }
             }
@@ -152,11 +150,10 @@ module.exports = {
 
                         instagramPhotos.push({
                             preview: url,
-                            publishedAt: cloudUrlsPromise.publishedAt
+                            publishedAt: cloudUrlsPromise.publishedAt,
+                            social_name: 'instagram'
                         });
                     }
-
-                    // const cloudUrls = cloudUrlsPromises.map(promiseObj => promiseObj.value.url);
 
                     req.body.instagram_photos = instagramPhotos;
                 } else {

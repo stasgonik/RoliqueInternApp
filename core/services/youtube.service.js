@@ -21,6 +21,7 @@ module.exports = {
                     videoId: value.id.videoId,
                     publishedAt: value.snippet.publishedAt,
                     preview: value.snippet.thumbnails.high.url,
+                    social_name: 'youtube'
                 }));
 
                 return {
