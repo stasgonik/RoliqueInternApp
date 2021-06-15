@@ -43,6 +43,7 @@ router.put('/:userId',
     userMiddleware.normalizeNames,
     userMiddleware.checkIsUpdateUser,
     userMiddleware.checkRoleRights,
+    userMiddleware.doesUserExist(),
     fileMiddleware.checkFiles,
     fileMiddleware.checkAvatar,
     userController.editUser);
