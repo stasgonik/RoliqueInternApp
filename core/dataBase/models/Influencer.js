@@ -16,13 +16,15 @@ const youtubeSubSchema = new Schema({
     _id: false,
     videoId: String,
     publishedAt: Date,
-    preview: String
+    preview: String,
+    social_name: String
 });
 
 const instagramSubSchema = new Schema({
     _id: false,
     publishedAt: Date,
     preview: String,
+    social_name: String
 });
 
 const influencerScheme = new Schema({
